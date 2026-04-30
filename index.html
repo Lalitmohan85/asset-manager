@@ -474,6 +474,7 @@ let allAssets = [];
 let currentFilter = 'all';
 let searchQuery = '';
 let pendingAction = null;
+let cameFromList = false;
 let scanner = null;
 let scannerRunning = false;
 let serialCheckTimer = null;
@@ -610,8 +611,15 @@ function switchNav(tab) {
 }
 function goBack() {
   stopScan();
-  showScreen(currentAsset ? 'screen-detail' : 'screen-scan');
-  if (!currentAsset) switchNav('scan');
+  if (cameFromList) {
+    cameFromList = false;
+    showScreen('screen-list');
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('nav-list').classList.add('active');
+  } else {
+    showScreen('screen-scan');
+    switchNav('scan');
+  }
 }
 
 // ── API ───────────────────────────────────────────────
@@ -646,7 +654,14 @@ function stopScan() {
   btn.innerHTML = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><rect x="7" y="7" width="10" height="10" rx="1"/></svg> Start Camera & Scan';
   btn.onclick = startScan;
 }
+function openAssetFromList(id) {
+  cameFromList = true;
+  showScreen('screen-detail');
+  lookupAsset(id);
+}
+
 function lookupManual() {
+  cameFromList = false;
   const id = document.getElementById('manual-id').value.trim();
   if (!id) return showToast('Please enter an Asset ID');
   lookupAsset(id);
@@ -1033,7 +1048,7 @@ function renderList() {
     return;
   }
   document.getElementById('asset-list').innerHTML = assets.map(a=>`
-    <div class="asset-item" onclick="lookupAsset('${a['Asset ID']}');switchNav('scan')">
+    <div class="asset-item" onclick="openAssetFromList('${a['Asset ID']}')"
       <div class="asset-icon">${catEmoji[a['Category']]||'📦'}</div>
       <div class="asset-info">
         <div class="asset-name">${a['Asset Name']}</div>
