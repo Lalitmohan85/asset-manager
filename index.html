@@ -143,12 +143,32 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .lightbox-info{position:absolute;bottom:16px;left:0;right:0;text-align:center;color:rgba(255,255,255,.7);font-size:12px}
 
 /* ASSET LIST */
-.asset-item{display:flex;align-items:center;gap:12px;padding:13px;background:var(--surface);border-radius:var(--radius);border:1px solid var(--border2);margin-bottom:9px;cursor:pointer;transition:border-color .15s;box-shadow:var(--shadow)}
-.asset-item:hover{border-color:var(--accent)}
-.asset-icon{width:40px;height:40px;background:var(--accent-light);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:19px}
+.asset-item{display:flex;align-items:stretch;gap:0;background:var(--surface);border-radius:var(--radius);border:1px solid var(--border2);margin-bottom:9px;cursor:pointer;transition:all .15s;box-shadow:var(--shadow);overflow:hidden}
+.asset-item:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,0,0,.08)}
+.asset-item:active{transform:translateY(0)}
+.asset-cat-bar{width:4px;flex-shrink:0;border-radius:0}
+.asset-item-inner{display:flex;align-items:center;gap:12px;padding:13px;flex:1;min-width:0}
+.asset-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px}
 .asset-info{flex:1;min-width:0}
 .asset-name{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.asset-meta{font-size:11px;color:var(--text3);margin-top:2px}
+.asset-meta{font-size:11px;color:var(--text3);margin-top:2px;display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.asset-meta-dot{width:3px;height:3px;border-radius:50%;background:var(--text3);flex-shrink:0}
+.asset-right{text-align:right;flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:5px}
+.asset-holder{font-size:12px;font-weight:600;max-width:100px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.asset-dept{font-size:10px;color:var(--text3);max-width:100px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* CATEGORY BREAKDOWN */
+.cat-breakdown{margin-bottom:14px}
+.cat-breakdown-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--text3);margin-bottom:8px}
+.cat-chips{display:flex;gap:6px;flex-wrap:wrap}
+.cat-chip{display:flex;align-items:center;gap:5px;padding:6px 10px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid transparent;transition:all .15s;white-space:nowrap}
+.cat-chip.active{border-color:currentColor}
+.cat-chip-count{font-size:10px;background:rgba(0,0,0,.08);border-radius:10px;padding:1px 6px;font-weight:700}
+
+/* SORT BAR */
+.sort-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.sort-label{font-size:11px;color:var(--text3)}
+.sort-select{font-size:11px;font-family:'DM Sans',sans-serif;border:1px solid var(--border);border-radius:6px;padding:4px 8px;background:var(--surface2);color:var(--text);cursor:pointer}
 .search-wrap{position:relative;margin-bottom:10px}
 .search-inp{width:100%;padding:10px 13px 10px 36px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-family:'DM Sans',sans-serif;background:var(--surface2);color:var(--text);-webkit-appearance:none}
 .search-inp:focus{outline:none;border-color:var(--accent);background:#fff}
@@ -349,17 +369,28 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <div class="screen" id="screen-list">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
         <div class="section-title" style="margin:0">All Assets</div>
-        <span id="asset-count" style="font-size:12px;color:var(--text3)"></span>
+        <span id="asset-count" style="font-size:12px;color:var(--text3);font-weight:600"></span>
       </div>
       <div id="stats-row" class="stats-row"></div>
+      <div class="cat-breakdown">
+        <div class="cat-breakdown-title">By Category</div>
+        <div class="cat-chips" id="cat-chips"></div>
+      </div>
       <div class="search-wrap">
         <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-        <input class="search-inp" type="text" placeholder="Search name, ID, holder, category..." oninput="filterAssets(this.value)" id="asset-search">
+        <input class="search-inp" type="text" placeholder="Search name, ID, holder, serial..." oninput="filterAssets(this.value)" id="asset-search">
       </div>
-      <div class="filter-tabs">
-        <button class="filter-tab active" id="ftab-all" onclick="setFilter('all')">All</button>
-        <button class="filter-tab" id="ftab-available" onclick="setFilter('available')">✅ Available</button>
-        <button class="filter-tab" id="ftab-assigned" onclick="setFilter('assigned')">👤 Assigned</button>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+        <div class="filter-tabs" style="margin-bottom:0;flex:1">
+          <button class="filter-tab active" id="ftab-all" onclick="setFilter('all')">All</button>
+          <button class="filter-tab" id="ftab-available" onclick="setFilter('available')">✅ Free</button>
+          <button class="filter-tab" id="ftab-assigned" onclick="setFilter('assigned')">👤 Assigned</button>
+        </div>
+        <select class="sort-select" id="sort-select" onchange="renderList()">
+          <option value="name">A–Z</option>
+          <option value="recent">Recent</option>
+          <option value="condition">Condition</option>
+        </select>
       </div>
       <div id="asset-list"></div>
     </div>
@@ -472,6 +503,7 @@ let currentUser = null;
 let currentAsset = null;
 let allAssets = [];
 let currentFilter = 'all';
+let currentCatFilter = 'all';
 let searchQuery = '';
 let pendingAction = null;
 let cameFromList = false;
@@ -991,14 +1023,26 @@ async function saveAsset() {
 
 // ── ASSET LIST ────────────────────────────────────────
 const catEmoji = {'IT Equipment':'💻','Furniture':'🪑','Tools':'🔧','Vehicle':'🚗','Electronics':'📱','Office Equipment':'🖨️','Other':'📦'};
+const catColor = {
+  'IT Equipment':  { bg:'#EBF0FD', color:'#2D5BE3', bar:'#2D5BE3' },
+  'Furniture':     { bg:'#FEF3C7', color:'#B45309', bar:'#F59E0B' },
+  'Tools':         { bg:'#F3F4F6', color:'#374151', bar:'#6B7280' },
+  'Vehicle':       { bg:'#E6F5EF', color:'#1A7F5A', bar:'#1A7F5A' },
+  'Electronics':   { bg:'#FDF2F8', color:'#9D174D', bar:'#EC4899' },
+  'Office Equipment':{ bg:'#FFF7ED', color:'#C2410C', bar:'#EA580C' },
+  'Other':         { bg:'#F9F8F5', color:'#6B6860', bar:'#A8A69F' }
+};
+const condOrder = { 'New':0, 'Good':1, 'Fair':2, 'Poor':3 };
 
 async function loadAssetList() {
   document.getElementById('asset-list').innerHTML = '<div class="loading"><div class="spinner"></div></div>';
   document.getElementById('stats-row').innerHTML = '';
+  document.getElementById('cat-chips').innerHTML = '';
   try {
     const d = await api({ action:'getAllAssets' });
     allAssets = d.assets || [];
     renderStats();
+    renderCategoryChips();
     renderList();
   } catch(e) {
     document.getElementById('asset-list').innerHTML = '<p style="color:var(--red);text-align:center;padding:20px">Could not load assets. Check connection.</p>';
@@ -1006,13 +1050,65 @@ async function loadAssetList() {
 }
 
 function renderStats() {
-  const total = allAssets.length;
+  const total    = allAssets.length;
   const assigned = allAssets.filter(a => a['Current Holder'] && a['Current Holder'] !== 'Unassigned').length;
   const available = total - assigned;
+  const poor     = allAssets.filter(a => a['Condition'] === 'Poor').length;
   document.getElementById('stats-row').innerHTML = `
-    <div class="stat-card"><div class="stat-num">${total}</div><div class="stat-label">Total</div></div>
-    <div class="stat-card" style="cursor:pointer" onclick="setFilter('available')"><div class="stat-num" style="color:var(--green)">${available}</div><div class="stat-label">Available</div></div>
-    <div class="stat-card" style="cursor:pointer" onclick="setFilter('assigned')"><div class="stat-num" style="color:var(--accent)">${assigned}</div><div class="stat-label">Assigned</div></div>`;
+    <div class="stat-card" style="cursor:pointer" onclick="setFilter('all');setCatFilter('all')">
+      <div class="stat-num">${total}</div><div class="stat-label">Total</div>
+    </div>
+    <div class="stat-card" style="cursor:pointer" onclick="setFilter('available');setCatFilter('all')">
+      <div class="stat-num" style="color:var(--green)">${available}</div><div class="stat-label">Available</div>
+    </div>
+    <div class="stat-card" style="cursor:pointer" onclick="setFilter('assigned');setCatFilter('all')">
+      <div class="stat-num" style="color:var(--accent)">${assigned}</div><div class="stat-label">Assigned</div>
+    </div>`;
+}
+
+function renderCategoryChips() {
+  const counts = {};
+  allAssets.forEach(a => {
+    const c = a['Category'] || 'Other';
+    counts[c] = (counts[c] || 0) + 1;
+  });
+  const chips = document.getElementById('cat-chips');
+  chips.innerHTML = '';
+
+  // "All" chip
+  const allChip = document.createElement('div');
+  allChip.className = 'cat-chip active';
+  allChip.id = 'cchip-all';
+  allChip.style.cssText = 'background:#1C1B18;color:#fff;border-color:#1C1B18';
+  allChip.innerHTML = `All <span class="cat-chip-count">${allAssets.length}</span>`;
+  allChip.onclick = () => setCatFilter('all');
+  chips.appendChild(allChip);
+
+  Object.entries(counts).sort((a,b) => b[1]-a[1]).forEach(([cat, count]) => {
+    const col = catColor[cat] || catColor['Other'];
+    const chip = document.createElement('div');
+    chip.className = 'cat-chip';
+    chip.id = 'cchip-' + cat.replace(/\s+/g,'-');
+    chip.style.cssText = `background:${col.bg};color:${col.color}`;
+    chip.innerHTML = `${catEmoji[cat]||'📦'} ${cat} <span class="cat-chip-count">${count}</span>`;
+    chip.onclick = () => setCatFilter(cat);
+    chips.appendChild(chip);
+  });
+}
+
+function setCatFilter(cat) {
+  currentCatFilter = cat;
+  document.querySelectorAll('.cat-chip').forEach(c => {
+    c.classList.remove('active');
+    c.style.borderColor = 'transparent';
+  });
+  const active = document.getElementById('cchip-' + (cat === 'all' ? 'all' : cat.replace(/\s+/g,'-')));
+  if (active) {
+    active.classList.add('active');
+    const col = cat === 'all' ? { color:'#1C1B18' } : (catColor[cat] || catColor['Other']);
+    active.style.borderColor = col.color;
+  }
+  renderList();
 }
 
 function setFilter(f) {
@@ -1029,8 +1125,15 @@ function filterAssets(q) {
 
 function renderList() {
   let assets = allAssets;
+
+  // Status filter
   if (currentFilter === 'available') assets = assets.filter(a => !a['Current Holder'] || a['Current Holder']==='Unassigned');
-  if (currentFilter === 'assigned') assets = assets.filter(a => a['Current Holder'] && a['Current Holder']!=='Unassigned');
+  if (currentFilter === 'assigned')  assets = assets.filter(a => a['Current Holder'] && a['Current Holder']!=='Unassigned');
+
+  // Category filter
+  if (currentCatFilter !== 'all') assets = assets.filter(a => (a['Category']||'Other') === currentCatFilter);
+
+  // Search
   if (searchQuery) {
     const lo = searchQuery.toLowerCase();
     assets = assets.filter(a =>
@@ -1039,27 +1142,60 @@ function renderList() {
       (a['Current Holder']||'').toLowerCase().includes(lo)||
       (a['Asset ID']||'').toLowerCase().includes(lo)||
       (a['Department']||'').toLowerCase().includes(lo)||
-      (a['Brand/Model']||'').toLowerCase().includes(lo)
+      (a['Brand/Model']||'').toLowerCase().includes(lo)||
+      (a['Serial Number']||'').toLowerCase().includes(lo)
     );
   }
+
+  // Sort
+  const sortVal = document.getElementById('sort-select')?.value || 'name';
+  if (sortVal === 'name')      assets = [...assets].sort((a,b) => (a['Asset Name']||'').localeCompare(b['Asset Name']||''));
+  if (sortVal === 'recent')    assets = [...assets].sort((a,b) => new Date(b['Last Updated']||0) - new Date(a['Last Updated']||0));
+  if (sortVal === 'condition') assets = [...assets].sort((a,b) => (condOrder[a['Condition']]??9) - (condOrder[b['Condition']]??9));
+
   document.getElementById('asset-count').textContent = assets.length + ' asset' + (assets.length!==1?'s':'');
+
   if (!assets.length) {
-    document.getElementById('asset-list').innerHTML = `<div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg><div style="font-size:14px;font-weight:500;color:var(--text2)">${currentFilter==='available'?'No available assets':'No assets found'}</div></div>`;
+    document.getElementById('asset-list').innerHTML = `
+      <div class="empty-state">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
+        <div style="font-size:14px;font-weight:500;color:var(--text2)">No assets found</div>
+        <div style="font-size:12px;margin-top:4px">Try a different filter or search</div>
+      </div>`;
     return;
   }
-  document.getElementById('asset-list').innerHTML = assets.map(a=>`
-    <div class="asset-item" onclick="openAssetFromList('${a['Asset ID']}')"
-      <div class="asset-icon">${catEmoji[a['Category']]||'📦'}</div>
-      <div class="asset-info">
-        <div class="asset-name">${a['Asset Name']}</div>
-        <div class="asset-meta">${a['Asset ID']} · ${a['Category']||'—'}</div>
-        <div style="margin-top:4px">${cbadge(a['Condition'])}</div>
+
+  document.getElementById('asset-list').innerHTML = assets.map(a => {
+    const col     = catColor[a['Category']] || catColor['Other'];
+    const holder  = a['Current Holder'] || 'Unassigned';
+    const free    = !a['Current Holder'] || holder === 'Unassigned';
+    const cond    = a['Condition'] || '';
+    const condBadge = cond ? cbadge(cond) : '';
+    const brand   = a['Brand/Model'] ? `<span>${a['Brand/Model']}</span>` : '';
+    const dept    = a['Department'] || '';
+    return `
+    <div class="asset-item" onclick="openAssetFromList('${a['Asset ID']}')">
+      <div class="asset-cat-bar" style="background:${col.bar}"></div>
+      <div class="asset-item-inner">
+        <div class="asset-icon" style="background:${col.bg};color:${col.color}">${catEmoji[a['Category']]||'📦'}</div>
+        <div class="asset-info">
+          <div class="asset-name">${a['Asset Name']||'—'}</div>
+          <div class="asset-meta">
+            <span style="font-family:'DM Mono',monospace;font-size:10px">${a['Asset ID']}</span>
+            ${brand ? `<span class="asset-meta-dot"></span>${brand}` : ''}
+            ${dept  ? `<span class="asset-meta-dot"></span><span>${dept}</span>` : ''}
+          </div>
+          <div style="margin-top:5px;display:flex;align-items:center;gap:5px">
+            ${condBadge}
+            <span class="badge ${free ? 'badge-green' : 'badge-blue'}">${free ? '✓ Available' : '👤 ' + holder}</span>
+          </div>
+        </div>
+        <div style="flex-shrink:0;color:var(--text3)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+        </div>
       </div>
-      <div style="text-align:right;flex-shrink:0">
-        <div class="badge ${!a['Current Holder']||a['Current Holder']==='Unassigned'?'badge-green':'badge-blue'}" style="margin-bottom:3px">${!a['Current Holder']||a['Current Holder']==='Unassigned'?'Available':a['Current Holder']}</div>
-        <div style="font-size:11px;color:var(--text3)">${a['Department']||''}</div>
-      </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 // ── QR CODES ──────────────────────────────────────────
