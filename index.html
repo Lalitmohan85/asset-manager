@@ -1079,7 +1079,7 @@ async function loadQRCodes() {
       assets.forEach(a => {
         try {
           new QRCode(document.getElementById('qr-'+a['Asset ID']), {
-            text:'https://lalitmohan85.github.io/asset-manager/?id='+a['Asset ID'],
+            text: a['Asset ID'],
             width:100, height:100, colorDark:'#1C1B18', colorLight:'#ffffff',
             correctLevel:QRCode.CorrectLevel.M
           });
