@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#F4F2ED;--surface:#FFFFFF;--surface2:#F9F8F5;
+  --bg:#F4F2ED;--surface:#FFF;--surface2:#F9F8F5;
   --border:rgba(0,0,0,0.1);--border2:rgba(0,0,0,0.06);
   --text:#1C1B18;--text2:#6B6860;--text3:#A8A69F;
   --accent:#2D5BE3;--accent-light:#EBF0FD;
@@ -17,7 +17,7 @@
   --red:#C0392B;--red-light:#FDEEEC;
   --amber:#B45309;--amber-light:#FEF3C7;
   --radius:12px;--radius-sm:8px;
-  --shadow:0 1px 3px rgba(0,0,0,0.06),0 4px 12px rgba(0,0,0,0.04);
+  --shadow:0 1px 3px rgba(0,0,0,.06),0 4px 12px rgba(0,0,0,.04);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:15px}
@@ -54,10 +54,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .btn-primary{background:var(--accent);color:#fff}
 .btn-primary:hover{background:#2450c8}
 .btn-secondary{background:var(--surface2);color:var(--text);border:1.5px solid var(--border)}
-.btn-secondary:hover{background:var(--surface)}
 .btn-green{background:var(--green);color:#fff}
 .btn-red{background:var(--red);color:#fff}
-.btn-amber{background:var(--amber);color:#fff}
 .btn-sm{padding:7px 13px;font-size:12px;width:auto}
 .btn-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
 .btn:disabled{opacity:.5;cursor:not-allowed}
@@ -66,11 +64,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .badge-red{background:var(--red-light);color:var(--red)}
 .badge-amber{background:var(--amber-light);color:var(--amber)}
 .badge-blue{background:var(--accent-light);color:var(--accent)}
-.badge-grey{background:var(--surface2);color:var(--text2)}
 
 /* FILTER TABS */
-.filter-tabs{display:flex;gap:4px;background:var(--surface2);padding:4px;border-radius:10px;margin-bottom:14px}
-.filter-tab{flex:1;padding:7px 8px;border:none;background:transparent;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;color:var(--text2);transition:all .15s;font-family:'DM Sans',sans-serif}
+.filter-tabs{display:flex;gap:4px;background:var(--surface2);padding:4px;border-radius:10px;margin-bottom:12px}
+.filter-tab{flex:1;padding:7px 6px;border:none;background:transparent;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;color:var(--text2);transition:all .15s;font-family:'DM Sans',sans-serif;white-space:nowrap}
 .filter-tab.active{background:var(--surface);color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,.08)}
 
 /* LOGIN */
@@ -83,8 +80,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .ok-box{background:var(--green-light);color:var(--green);border-radius:var(--radius-sm);padding:9px 13px;font-size:13px;font-weight:500;margin-bottom:12px;display:none}
 .ok-box.show{display:block}
 
-/* OVERLAY */
-.overlay{position:fixed;inset:0;background:rgba(28,27,24,.78);z-index:500;display:flex;align-items:flex-end;justify-content:center;padding:0;backdrop-filter:blur(3px)}
+/* OVERLAY – bottom sheet */
+.overlay{position:fixed;inset:0;background:rgba(28,27,24,.78);z-index:500;display:flex;align-items:flex-end;justify-content:center;backdrop-filter:blur(3px)}
 .overlay-box{background:var(--surface);border-radius:20px 20px 0 0;padding:24px 20px 32px;width:100%;max-width:520px;box-shadow:0 -8px 40px rgba(0,0,0,.15);max-height:92vh;overflow-y:auto}
 .overlay-handle{width:36px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 18px}
 .overlay-box h2{font-size:17px;font-weight:600;margin-bottom:4px}
@@ -113,110 +110,72 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .action-locked:hover{border-color:var(--accent);color:var(--accent)}
 
 /* PHOTO UPLOAD */
-.photo-upload-area{border:2px dashed var(--border);border-radius:var(--radius-sm);padding:20px;text-align:center;cursor:pointer;transition:all .15s;background:var(--surface2);position:relative}
+.photo-upload-area{border:2px dashed var(--border);border-radius:var(--radius-sm);padding:18px;text-align:center;cursor:pointer;transition:all .15s;background:var(--surface2)}
 .photo-upload-area:hover{border-color:var(--accent);background:var(--accent-light)}
-.photo-upload-area input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
 .photo-preview-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
 .photo-thumb{position:relative;aspect-ratio:1;border-radius:8px;overflow:hidden;background:var(--surface2)}
-.photo-thumb img{width:100%;height:100%;object-fit:cover}
-.photo-thumb .remove-btn{position:absolute;top:3px;right:3px;width:20px;height:20px;background:rgba(0,0,0,.6);border-radius:50%;color:#fff;font-size:12px;display:flex;align-items:center;justify-content:center;cursor:pointer;border:none}
-.photo-uploading{display:flex;align-items:center;justify-content:center;gap:6px;padding:8px;font-size:12px;color:var(--text2)}
+.photo-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.photo-thumb .remove-btn{position:absolute;top:3px;right:3px;width:20px;height:20px;background:rgba(0,0,0,.65);border-radius:50%;color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;line-height:1}
 
 /* GALLERY SLIDER */
-.gallery-section{margin-top:4px}
+.gallery-section{}
 .gallery-group{margin-bottom:16px}
-.gallery-group-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--text3);margin-bottom:8px;display:flex;align-items:center;gap:6px}
-.gallery-slider{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+.gallery-group-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--text3);margin-bottom:8px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.gallery-slider{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory}
 .gallery-slider::-webkit-scrollbar{height:3px}
 .gallery-slider::-webkit-scrollbar-track{background:var(--surface2)}
 .gallery-slider::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
-.gallery-img{width:120px;height:120px;object-fit:cover;border-radius:var(--radius-sm);flex-shrink:0;scroll-snap-align:start;cursor:pointer;transition:opacity .15s;border:2px solid transparent}
-.gallery-img:hover{opacity:.9;border-color:var(--accent)}
+.gallery-img{width:130px;height:130px;object-fit:cover;border-radius:var(--radius-sm);flex-shrink:0;scroll-snap-align:start;cursor:pointer;border:2px solid transparent;transition:border-color .15s}
+.gallery-img:hover{border-color:var(--accent)}
+.gallery-empty{font-size:13px;color:var(--text3);text-align:center;padding:20px;background:var(--surface2);border-radius:var(--radius-sm)}
 
 /* LIGHTBOX */
-.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:1000;display:flex;align-items:center;justify-content:center;padding:16px}
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.94);z-index:1000;display:flex;align-items:center;justify-content:center;padding:16px}
 .lightbox img{max-width:100%;max-height:90vh;border-radius:var(--radius-sm);object-fit:contain}
-.lightbox-close{position:absolute;top:16px;right:16px;background:rgba(255,255,255,.15);border:none;color:#fff;width:36px;height:36px;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.lightbox-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.15);border:none;color:#fff;width:40px;height:40px;border-radius:50%;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.lightbox-prev{left:16px}
-.lightbox-next{right:16px}
+.lightbox-close{position:absolute;top:16px;right:16px;background:rgba(255,255,255,.15);border:none;color:#fff;width:38px;height:38px;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.lightbox-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.15);border:none;color:#fff;width:42px;height:42px;border-radius:50%;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.lightbox-prev{left:12px}
+.lightbox-next{right:12px}
 .lightbox-info{position:absolute;bottom:16px;left:0;right:0;text-align:center;color:rgba(255,255,255,.7);font-size:12px}
+
+/* CATEGORY TREE */
+.cat-tree{margin-bottom:14px}
+.cat-main-chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch}
+.cat-main-chips::-webkit-scrollbar{display:none}
+.cat-chip{display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid transparent;transition:all .15s;white-space:nowrap;flex-shrink:0}
+.cat-chip.active{border-color:currentColor;filter:brightness(.92)}
+.cat-chip-count{font-size:10px;background:rgba(0,0,0,.1);border-radius:10px;padding:1px 6px;font-weight:700}
+.sub-cat-chips{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px;padding:8px;background:var(--surface2);border-radius:var(--radius-sm)}
+.sub-chip{padding:4px 10px;border-radius:14px;font-size:11px;font-weight:600;cursor:pointer;border:1.5px solid var(--border);background:var(--surface);color:var(--text2);transition:all .15s;white-space:nowrap}
+.sub-chip.active{background:var(--accent);color:#fff;border-color:var(--accent)}
 
 /* ASSET LIST */
 .asset-item{display:flex;align-items:stretch;gap:0;background:var(--surface);border-radius:var(--radius);border:1px solid var(--border2);margin-bottom:9px;cursor:pointer;transition:all .15s;box-shadow:var(--shadow);overflow:hidden}
 .asset-item:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,0,0,.08)}
-.asset-item:active{transform:translateY(0)}
-.asset-cat-bar{width:4px;flex-shrink:0;border-radius:0}
+.asset-cat-bar{width:4px;flex-shrink:0}
 .asset-item-inner{display:flex;align-items:center;gap:12px;padding:13px;flex:1;min-width:0}
-.asset-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px}
+.asset-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:19px}
 .asset-info{flex:1;min-width:0}
 .asset-name{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.asset-meta{font-size:11px;color:var(--text3);margin-top:2px;display:flex;align-items:center;gap:5px;flex-wrap:wrap}
-.asset-meta-dot{width:3px;height:3px;border-radius:50%;background:var(--text3);flex-shrink:0}
-.asset-right{text-align:right;flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:5px}
-.asset-holder{font-size:12px;font-weight:600;max-width:100px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.asset-dept{font-size:10px;color:var(--text3);max-width:100px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.asset-meta{font-size:11px;color:var(--text3);margin-top:2px}
 
-/* CATEGORY BREAKDOWN */
-.cat-breakdown{margin-bottom:14px}
-.cat-breakdown-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--text3);margin-bottom:8px}
-.cat-chips{display:flex;gap:6px;flex-wrap:wrap}
-.cat-chip{display:flex;align-items:center;gap:5px;padding:6px 10px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid transparent;transition:all .15s;white-space:nowrap}
-.cat-chip.active{border-color:currentColor}
-.cat-chip-count{font-size:10px;background:rgba(0,0,0,.08);border-radius:10px;padding:1px 6px;font-weight:700}
+/* STATS */
+.stats-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px}
+.stat-card{background:var(--surface);border-radius:var(--radius-sm);border:1px solid var(--border2);padding:12px;text-align:center;cursor:pointer}
+.stat-num{font-size:22px;font-weight:700;letter-spacing:-.5px}
+.stat-label{font-size:11px;color:var(--text3);margin-top:2px}
 
-/* SORT BAR */
-.sort-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-.sort-label{font-size:11px;color:var(--text3)}
-.sort-select{font-size:11px;font-family:'DM Sans',sans-serif;border:1px solid var(--border);border-radius:6px;padding:4px 8px;background:var(--surface2);color:var(--text);cursor:pointer}
+/* SEARCH */
 .search-wrap{position:relative;margin-bottom:10px}
 .search-inp{width:100%;padding:10px 13px 10px 36px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-family:'DM Sans',sans-serif;background:var(--surface2);color:var(--text);-webkit-appearance:none}
 .search-inp:focus{outline:none;border-color:var(--accent);background:#fff}
 .search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--text3);pointer-events:none}
 
 /* QR */
-.qr-toolbar{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius);padding:14px;margin-bottom:14px;display:flex;flex-direction:column;gap:12px}
-.qr-toolbar-row{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
-.qr-toolbar-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--text3);white-space:nowrap}
-.qr-size-btns{display:flex;gap:4px}
-.qr-size-btn{padding:5px 12px;border:1.5px solid var(--border);border-radius:6px;font-size:12px;font-weight:600;font-family:'DM Sans',sans-serif;background:var(--surface2);color:var(--text2);cursor:pointer;transition:all .15s}
-.qr-size-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
-.qr-detail-btns{display:flex;gap:4px}
-.qr-detail-btn{padding:5px 11px;border:1.5px solid var(--border);border-radius:6px;font-size:12px;font-weight:600;font-family:'DM Sans',sans-serif;background:var(--surface2);color:var(--text2);cursor:pointer;transition:all .15s}
-.qr-detail-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
-.qr-select-row{display:flex;align-items:center;gap:8px}
-.qr-select-row button{font-size:12px;font-family:'DM Sans',sans-serif;padding:5px 10px;border:1.5px solid var(--border);border-radius:6px;background:var(--surface2);cursor:pointer;font-weight:500;color:var(--text2)}
-.qr-select-row button:hover{border-color:var(--accent);color:var(--accent)}
-.qr-selected-count{font-size:12px;color:var(--text2);font-weight:500}
-.qr-grid{display:grid;gap:10px}
-.qr-grid.size-sm{grid-template-columns:repeat(3,1fr)}
-.qr-grid.size-md{grid-template-columns:repeat(2,1fr)}
-.qr-grid.size-lg{grid-template-columns:1fr}
-.qr-card{background:#fff;border:2px solid var(--border2);border-radius:var(--radius-sm);padding:12px;text-align:center;cursor:pointer;transition:all .15s;position:relative;user-select:none}
-.qr-card:hover{border-color:var(--accent)}
-.qr-card.selected{border-color:var(--accent);background:var(--accent-light)}
-.qr-card .qr-check{position:absolute;top:7px;right:7px;width:20px;height:20px;border-radius:50%;border:2px solid var(--border);background:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all .15s}
-.qr-card.selected .qr-check{background:var(--accent);border-color:var(--accent);color:#fff}
-.qr-label{font-size:11px;font-weight:600;margin-top:7px;color:var(--text);word-break:break-word;line-height:1.3}
-.qr-id{font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);margin-top:2px}
-.qr-details-block{font-size:10px;color:var(--text2);margin-top:5px;text-align:left;border-top:1px solid var(--border2);padding-top:5px;line-height:1.6}
-.qr-print-bar{position:sticky;bottom:80px;left:0;right:0;padding:10px 16px;z-index:90;display:none}
-.qr-print-bar.show{display:block}
-.qr-print-bar-inner{background:var(--accent);color:#fff;border-radius:var(--radius);padding:13px 16px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 4px 20px rgba(45,91,227,.35)}
-
-@media print{
-  .bottomnav,.topbar,.no-print{display:none!important}
-  .screen{display:block!important;padding:0}
-  body{background:#fff}
-  .qr-toolbar,.qr-print-bar{display:none!important}
-  .qr-card{border:1px solid #ccc!important;background:#fff!important;break-inside:avoid;page-break-inside:avoid}
-  .qr-card .qr-check{display:none!important}
-  .qr-grid{gap:6px}
-  .qr-grid.size-sm{grid-template-columns:repeat(4,1fr)}
-  .qr-grid.size-md{grid-template-columns:repeat(3,1fr)}
-  .qr-grid.size-lg{grid-template-columns:repeat(2,1fr)}
-  .qr-card.print-hidden{display:none!important}
-}
+.qr-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.qr-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;text-align:center}
+.qr-label{font-size:11px;font-weight:600;margin-top:7px;color:var(--text);word-break:break-word}
+.qr-id{font-family:'DM Mono',monospace;font-size:10px;color:var(--text3)}
 
 /* USERS */
 .user-item{display:flex;align-items:center;gap:12px;padding:12px;background:var(--surface);border-radius:var(--radius-sm);border:1px solid var(--border2);margin-bottom:8px}
@@ -243,14 +202,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .divider{text-align:center;font-size:12px;color:var(--text3);margin:12px 0;display:flex;align-items:center;gap:8px}
 .divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border2)}
 
-/* STATS ROW */
-.stats-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px}
-.stat-card{background:var(--surface);border-radius:var(--radius-sm);border:1px solid var(--border2);padding:12px;text-align:center}
-.stat-num{font-size:22px;font-weight:700;letter-spacing:-.5px}
-.stat-label{font-size:11px;color:var(--text3);margin-top:2px}
-
-
-
+@media print{
+  .bottomnav,.topbar,.no-print{display:none!important}
+  .screen{display:block!important;padding:0}
+  .qr-grid{grid-template-columns:repeat(4,1fr)}
+  body{background:#fff}
+}
 </style>
 </head>
 <body>
@@ -260,7 +217,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 <div class="lightbox" id="lightbox" style="display:none" onclick="closeLightbox()">
   <button class="lightbox-close" onclick="closeLightbox()">✕</button>
   <button class="lightbox-nav lightbox-prev" onclick="event.stopPropagation();lightboxNav(-1)">‹</button>
-  <img id="lightbox-img" src="" alt="">
+  <img id="lightbox-img" src="" alt="" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22><rect fill=%22%23333%22 width=%22200%22 height=%22200%22/><text fill=%22%23999%22 x=%2250%%22 y=%2250%%22 text-anchor=%22middle%22 dy=%22.3em%22 font-size=%2214%22>Image unavailable</text></svg>'">
   <button class="lightbox-nav lightbox-next" onclick="event.stopPropagation();lightboxNav(1)">›</button>
   <div class="lightbox-info" id="lightbox-info"></div>
 </div>
@@ -302,7 +259,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <!-- SCAN -->
     <div class="screen active" id="screen-scan">
       <div class="section-title" style="margin-top:4px">Scan Asset</div>
-      <div class="scan-area" id="scan-area">
+      <div class="scan-area">
         <div class="scan-idle" id="scan-idle">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><rect x="7" y="7" width="10" height="10" rx="1"/></svg>
           <div style="font-size:14px;font-weight:500;color:var(--text2)">Camera not started</div>
@@ -347,26 +304,27 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       <div id="add-form" style="display:none">
         <div class="card">
           <div class="card-title">Asset Details</div>
-          <div class="field"><label>Asset Name *</label><input type="text" id="n-name" placeholder="e.g. MacBook Pro, Godrej Chair"></div>
-          <div class="field-row">
-            <div class="field"><label>Category *</label>
-              <select id="n-cat">
-                <option value="">Select...</option>
-                <option>IT Equipment</option><option>Furniture</option><option>Tools</option>
-                <option>Vehicle</option><option>Electronics</option><option>Office Equipment</option><option>Other</option>
-              </select>
-            </div>
-            <div class="field"><label>Condition *</label>
-              <select id="n-cond">
-                <option value="">Select...</option>
-                <option>New</option><option>Good</option><option>Fair</option><option>Poor</option>
-              </select>
-            </div>
+          <div class="field"><label>Asset Name *</label><input type="text" id="n-name" placeholder="e.g. MacBook Pro 14, Godrej Chair"></div>
+          <div class="field">
+            <label>Main Category *</label>
+            <select id="n-maincat" onchange="updateSubCats('n-maincat','n-subcat')">
+              <option value="">Select main category...</option>
+            </select>
           </div>
-          <div class="field"><label>Brand / Model</label><input type="text" id="n-brand" placeholder="e.g. Apple MacBook Pro M3"></div>
+          <div class="field">
+            <label>Sub Category</label>
+            <select id="n-subcat"><option value="">Select sub category...</option></select>
+          </div>
+          <div class="field"><label>Condition *</label>
+            <select id="n-cond">
+              <option value="">Select...</option>
+              <option>New</option><option>Good</option><option>Fair</option><option>Poor</option>
+            </select>
+          </div>
+          <div class="field"><label>Brand / Model</label><input type="text" id="n-brand" placeholder="e.g. Apple MacBook Pro M3 14-inch"></div>
           <div class="field">
             <label>Serial Number</label>
-            <input type="text" id="n-serial" placeholder="Serial / IMEI / Tag number" oninput="checkSerial(this.value)">
+            <input type="text" id="n-serial" placeholder="Serial / IMEI / Asset Tag" oninput="checkSerial(this.value)">
             <div class="field-warn" id="serial-warn"></div>
           </div>
           <div class="field-row">
@@ -374,23 +332,21 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
             <div class="field"><label>Cost (₹)</label><input type="number" id="n-cost" placeholder="0"></div>
           </div>
           <div class="field-row">
-            <div class="field"><label>Department</label><input type="text" id="n-dept" placeholder="e.g. HR, IT"></div>
+            <div class="field"><label>Department</label><input type="text" id="n-dept" placeholder="e.g. HR, IT, Finance"></div>
             <div class="field"><label>Current Holder</label><input type="text" id="n-holder" placeholder="If already assigned"></div>
           </div>
           <div class="field"><label>Description / Notes</label><textarea id="n-desc" placeholder="Any additional details..."></textarea></div>
           <div class="field">
-            <label>Asset Photos (up to 5)</label>
+            <label>Asset Photos — up to 5</label>
             <div class="photo-upload-area" id="add-upload-area" onclick="document.getElementById('add-photos-input').click()">
               <input type="file" id="add-photos-input" accept="image/*" multiple style="display:none" onchange="handlePhotoSelect(this,'add')">
-              <div style="font-size:13px;color:var(--text2);font-weight:500">📷 Tap to add photos</div>
-              <div style="font-size:11px;color:var(--text3);margin-top:3px">Up to 5 photos · JPG, PNG</div>
+              <div style="font-size:24px;margin-bottom:6px">📷</div>
+              <div style="font-size:13px;color:var(--text2);font-weight:500">Tap to add photos</div>
+              <div style="font-size:11px;color:var(--text3);margin-top:3px">Up to 5 · JPG / PNG</div>
             </div>
             <div class="photo-preview-grid" id="add-photo-previews"></div>
           </div>
-          <div class="field">
-            <label>Adding By *</label>
-            <input type="text" id="n-addedby" placeholder="Your full name">
-          </div>
+          <div class="field"><label>Adding By *</label><input type="text" id="n-addedby" placeholder="Your full name"></div>
           <button class="btn btn-primary" id="save-asset-btn" onclick="saveAsset()">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>
             Save Asset & Generate QR
@@ -406,25 +362,19 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
         <span id="asset-count" style="font-size:12px;color:var(--text3);font-weight:600"></span>
       </div>
       <div id="stats-row" class="stats-row"></div>
-      <div class="cat-breakdown">
-        <div class="cat-breakdown-title">By Category</div>
-        <div class="cat-chips" id="cat-chips"></div>
-      </div>
       <div class="search-wrap">
         <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-        <input class="search-inp" type="text" placeholder="Search name, ID, holder, serial..." oninput="filterAssets(this.value)" id="asset-search">
+        <input class="search-inp" type="text" placeholder="Search name, ID, serial, holder..." oninput="filterAssets(this.value)">
       </div>
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
-        <div class="filter-tabs" style="margin-bottom:0;flex:1">
-          <button class="filter-tab active" id="ftab-all" onclick="setFilter('all')">All</button>
-          <button class="filter-tab" id="ftab-available" onclick="setFilter('available')">✅ Free</button>
-          <button class="filter-tab" id="ftab-assigned" onclick="setFilter('assigned')">👤 Assigned</button>
-        </div>
-        <select class="sort-select" id="sort-select" onchange="renderList()">
-          <option value="name">A–Z</option>
-          <option value="recent">Recent</option>
-          <option value="condition">Condition</option>
-        </select>
+      <div class="filter-tabs">
+        <button class="filter-tab active" id="ftab-all" onclick="setFilter('all')">All</button>
+        <button class="filter-tab" id="ftab-available" onclick="setFilter('available')">✅ Free</button>
+        <button class="filter-tab" id="ftab-assigned" onclick="setFilter('assigned')">👤 Assigned</button>
+      </div>
+      <!-- Category Tree -->
+      <div class="cat-tree">
+        <div class="cat-main-chips" id="cat-main-chips"></div>
+        <div id="sub-cat-row" style="display:none"><div class="sub-cat-chips" id="sub-cat-chips"></div></div>
       </div>
       <div id="asset-list"></div>
     </div>
@@ -433,48 +383,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <div class="screen" id="screen-qr">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
         <div class="section-title" style="margin:0">QR Codes</div>
-        <span id="qr-total-count" style="font-size:12px;color:var(--text3);font-weight:600"></span>
+        <button class="btn btn-secondary btn-sm no-print" onclick="window.print()">🖨 Print All</button>
       </div>
-
-      <!-- Toolbar -->
-      <div class="qr-toolbar no-print">
-        <!-- Size -->
-        <div class="qr-toolbar-row">
-          <span class="qr-toolbar-label">Size</span>
-          <div class="qr-size-btns">
-            <button class="qr-size-btn active" id="qrsz-sm" onclick="setQrSize('sm')">Small</button>
-            <button class="qr-size-btn" id="qrsz-md" onclick="setQrSize('md')">Medium</button>
-            <button class="qr-size-btn" id="qrsz-lg" onclick="setQrSize('lg')">Large</button>
-          </div>
-        </div>
-        <!-- Detail level -->
-        <div class="qr-toolbar-row">
-          <span class="qr-toolbar-label">Label</span>
-          <div class="qr-detail-btns">
-            <button class="qr-detail-btn active" id="qrdt-minimal" onclick="setQrDetail('minimal')">QR + Name</button>
-            <button class="qr-detail-btn" id="qrdt-full" onclick="setQrDetail('full')">+ Details</button>
-          </div>
-        </div>
-        <!-- Selection -->
-        <div class="qr-toolbar-row">
-          <span class="qr-toolbar-label">Select</span>
-          <div class="qr-select-row">
-            <button onclick="qrSelectAll()">Select All</button>
-            <button onclick="qrSelectNone()">None</button>
-            <span class="qr-selected-count" id="qr-sel-count"></span>
-          </div>
-        </div>
-      </div>
-
-      <div class="qr-grid size-sm" id="qr-grid"></div>
-
-      <!-- Sticky print bar -->
-      <div class="qr-print-bar no-print" id="qr-print-bar">
-        <div class="qr-print-bar-inner">
-          <span id="qr-print-label" style="font-size:13px;font-weight:600"></span>
-          <button onclick="printSelectedQR()" style="background:#fff;color:var(--accent);border:none;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif">🖨 Print</button>
-        </div>
-      </div>
+      <p style="font-size:13px;color:var(--text2);margin-bottom:14px">Print and stick on each asset. Anyone can scan with their phone camera.</p>
+      <div class="qr-grid" id="qr-grid"></div>
     </div>
 
     <!-- ADMIN -->
@@ -489,7 +401,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
         <div id="users-list"></div>
       </div>
       <div id="admin-logs" style="display:none">
-        <button class="btn btn-secondary btn-sm" style="width:auto;margin-bottom:14px" onclick="loadLogs()">↻ Refresh Logs</button>
+        <button class="btn btn-secondary btn-sm" style="width:auto;margin-bottom:14px" onclick="loadLogs()">↻ Refresh</button>
         <div class="card"><div id="logs-list"></div></div>
       </div>
     </div>
@@ -525,7 +437,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   <div class="overlay-box">
     <div class="overlay-handle"></div>
     <h2>🔒 Sign In Required</h2>
-    <div class="sub" id="overlay-sub">Sign in to perform this action</div>
+    <div class="sub" id="overlay-sub">Sign in to continue</div>
     <div class="err-box" id="ov-err"></div>
     <div class="field"><label>Username</label><input type="text" id="ov-u" placeholder="Username" autocomplete="username" onkeydown="if(event.key==='Enter')doOverlayLogin()"></div>
     <div class="field"><label>Password</label><input type="password" id="ov-p" placeholder="Password" autocomplete="current-password" onkeydown="if(event.key==='Enter')doOverlayLogin()"></div>
@@ -564,40 +476,105 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       <div style="font-size:16px;font-weight:600" id="um-name"></div>
       <div style="font-size:12px;color:var(--text3);font-family:'DM Mono',monospace;margin-top:2px" id="um-user"></div>
     </div>
+    <button class="btn btn-secondary" style="margin-bottom:8px" onclick="showPasswordRequest()">🔑 Request Password Change</button>
     <button class="btn btn-secondary" style="margin-bottom:8px" onclick="hideOverlay('usermenu-overlay')">Close</button>
     <button class="btn btn-red" onclick="doLogout()">Sign Out</button>
   </div>
 </div>
 
+<!-- PASSWORD REQUEST OVERLAY -->
+<div class="overlay" id="pwreq-overlay" style="display:none" onclick="overlayBgClick(event,'pwreq-overlay')">
+  <div class="overlay-box">
+    <div class="overlay-handle"></div>
+    <h2>🔑 Request Password Change</h2>
+    <div class="sub">An email will be sent to the admin to change your password.</div>
+    <div class="err-box" id="pwr-err"></div>
+    <div class="ok-box" id="pwr-ok"></div>
+    <div class="field"><label>Reason / Message (optional)</label><textarea id="pwr-msg" placeholder="e.g. I forgot my password, please reset it."></textarea></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <button class="btn btn-secondary" onclick="hideOverlay('pwreq-overlay')">Cancel</button>
+      <button class="btn btn-primary" id="pwr-btn" onclick="submitPasswordRequest()">Send Request</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const API = "https://script.google.com/macros/s/AKfycbwPxMClxXAdIRbyj78afUA29gy_odZvXjW_5NlcP9JhNB8CM_Y25Kw_-MIi5EnP90wq3Q/exec";
-let currentUser = null;
-let currentAsset = null;
-let allAssets = [];
-let currentFilter = 'all';
-let currentCatFilter = 'all';
-let searchQuery = '';
-let pendingAction = null;
-let cameFromList = false;
-let scanner = null;
-let scannerRunning = false;
-let serialCheckTimer = null;
-let serialDuplicate = false;
 
-// Photo state per context
-let photoState = { add: [], action: [] };
-let lightboxImages = [];
-let lightboxIndex = 0;
+// ── CATEGORY STRUCTURE ────────────────────────────────
+const CATEGORIES = {
+  'Laptops & Computers': {
+    emoji:'💻', color:'#2D5BE3', bg:'#EBF0FD',
+    subs:['Laptops','Desktops','Monitors','Keyboards & Mice','Webcams','Docking Stations','Other']
+  },
+  'Mobile & Tablets': {
+    emoji:'📱', color:'#7C3AED', bg:'#EDE9FE',
+    subs:['Smartphones','Tablets','Chargers & Cables','Cases','Other']
+  },
+  'Office Equipment': {
+    emoji:'🖨️', color:'#C2410C', bg:'#FFF7ED',
+    subs:['Printers','Scanners','Projectors','Phones','Stationery','Other']
+  },
+  'Furniture': {
+    emoji:'🪑', color:'#B45309', bg:'#FEF3C7',
+    subs:['Chairs','Desks','Cabinets','Shelves','Other']
+  },
+  'Networking': {
+    emoji:'🌐', color:'#0369A1', bg:'#E0F2FE',
+    subs:['Routers','Switches','Access Points','Cables','Other']
+  },
+  'Tools & Equipment': {
+    emoji:'🔧', color:'#374151', bg:'#F3F4F6',
+    subs:['Hand Tools','Power Tools','Safety Equipment','Other']
+  },
+  'Vehicles': {
+    emoji:'🚗', color:'#1A7F5A', bg:'#E6F5EF',
+    subs:['Cars','Bikes','Vans','Other']
+  },
+  'Other': {
+    emoji:'📦', color:'#6B6860', bg:'#F9F8F5',
+    subs:['General','Miscellaneous']
+  }
+};
+
+// ── STATE ─────────────────────────────────────────────
+let currentUser = null, currentAsset = null, allAssets = [];
+let currentFilter = 'all', currentMainCat = 'all', currentSubCat = 'all', searchQuery = '';
+let pendingAction = null, cameFromList = false;
+let scanner = null, scannerRunning = false, serialCheckTimer = null, serialDuplicate = false;
+let photoState = { add:[], action:[] };
+let lightboxImages = [], lightboxIndex = 0;
 
 // ── INIT ─────────────────────────────────────────────
 window.addEventListener('load', () => {
-  const params = new URLSearchParams(window.location.search);
-  const assetId = params.get('asset') || params.get('id');
+  populateCategoryDropdowns();
+  const assetId = new URLSearchParams(window.location.search).get('asset') || new URLSearchParams(window.location.search).get('id');
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('main-app').style.display = 'block';
   updateUI();
   if (assetId) setTimeout(() => lookupAsset(assetId), 300);
 });
+
+function populateCategoryDropdowns() {
+  const sel = document.getElementById('n-maincat');
+  sel.innerHTML = '<option value="">Select main category...</option>';
+  Object.keys(CATEGORIES).forEach(cat => {
+    const o = document.createElement('option'); o.value = cat; o.textContent = CATEGORIES[cat].emoji + ' ' + cat;
+    sel.appendChild(o);
+  });
+}
+
+function updateSubCats(mainSelId, subSelId) {
+  const mainVal = document.getElementById(mainSelId).value;
+  const subSel = document.getElementById(subSelId);
+  subSel.innerHTML = '<option value="">All / General</option>';
+  if (mainVal && CATEGORIES[mainVal]) {
+    CATEGORIES[mainVal].subs.forEach(s => {
+      const o = document.createElement('option'); o.value = s; o.textContent = s; subSel.appendChild(o);
+    });
+    subSel.disabled = false;
+  } else { subSel.disabled = true; }
+}
 
 // ── AUTH ─────────────────────────────────────────────
 function showLoginScreen() {
@@ -615,239 +592,248 @@ async function doLogin() {
   const p = document.getElementById('lp').value;
   const err = document.getElementById('login-err');
   const btn = document.getElementById('login-btn');
-  if (!u || !p) { showErr(err, 'Please enter username and password'); return; }
+  if (!u||!p) { showErr(err,'Please enter username and password'); return; }
   btn.innerHTML = '<span class="spinner-sm"></span> Signing in...'; btn.disabled = true;
   try {
-    const d = await api({ action:'login', username:u, password:p });
+    const d = await api({action:'login',username:u,password:p});
     if (d.success) {
-      currentUser = { username:u, fullName:d.fullName, role:d.role };
+      currentUser = {username:u,fullName:d.fullName,role:d.role};
       document.getElementById('login-screen').style.display = 'none';
       document.getElementById('main-app').style.display = 'block';
-      document.getElementById('lu').value = ''; document.getElementById('lp').value = '';
+      document.getElementById('lu').value=''; document.getElementById('lp').value='';
       err.classList.remove('show'); updateUI();
-      showToast('Welcome, ' + d.fullName.split(' ')[0] + '! 👋');
-      if (pendingAction) { const a = pendingAction; pendingAction = null; showActionForm(a); }
-    } else { showErr(err, d.error || 'Invalid credentials'); }
-  } catch(e) { showErr(err, 'Connection error. Try again.'); }
-  btn.textContent = 'Sign In'; btn.disabled = false;
+      showToast('Welcome, '+d.fullName.split(' ')[0]+'! 👋');
+      if (pendingAction) { const a=pendingAction; pendingAction=null; showActionForm(a); }
+    } else showErr(err, d.error||'Invalid credentials');
+  } catch(e) { showErr(err,'Connection error. Try again.'); }
+  btn.textContent='Sign In'; btn.disabled=false;
 }
 function showLoginOverlay(reason) {
-  pendingAction = reason || null;
-  document.getElementById('ov-u').value = ''; document.getElementById('ov-p').value = '';
+  pendingAction = reason||null;
+  document.getElementById('ov-u').value=''; document.getElementById('ov-p').value='';
   document.getElementById('ov-err').classList.remove('show');
   document.getElementById('overlay-sub').textContent =
-    reason==='allocate' ? 'Sign in to allocate this asset' :
-    reason==='return' ? 'Sign in to record a return' :
-    reason==='add' ? 'Sign in to add assets' : 'Sign in to continue';
+    reason==='allocate'?'Sign in to allocate this asset':
+    reason==='return'?'Sign in to record a return':
+    reason==='add'?'Sign in to add assets':'Sign in to continue';
   showOverlay('login-overlay');
-  setTimeout(() => document.getElementById('ov-u').focus(), 200);
+  setTimeout(()=>document.getElementById('ov-u').focus(),200);
 }
 async function doOverlayLogin() {
-  const u = document.getElementById('ov-u').value.trim();
-  const p = document.getElementById('ov-p').value;
-  const err = document.getElementById('ov-err');
-  const btn = document.getElementById('ov-btn');
-  if (!u || !p) { showErr(err, 'Please enter username and password'); return; }
-  btn.innerHTML = '<span class="spinner-sm"></span> Signing in...'; btn.disabled = true;
+  const u=document.getElementById('ov-u').value.trim();
+  const p=document.getElementById('ov-p').value;
+  const err=document.getElementById('ov-err');
+  const btn=document.getElementById('ov-btn');
+  if (!u||!p) { showErr(err,'Please enter username and password'); return; }
+  btn.innerHTML='<span class="spinner-sm"></span> Signing in...'; btn.disabled=true;
   try {
-    const d = await api({ action:'login', username:u, password:p });
+    const d=await api({action:'login',username:u,password:p});
     if (d.success) {
-      currentUser = { username:u, fullName:d.fullName, role:d.role };
+      currentUser={username:u,fullName:d.fullName,role:d.role};
       hideOverlay('login-overlay'); updateUI();
-      showToast('Welcome, ' + d.fullName.split(' ')[0] + '! 👋');
-      if (pendingAction === 'add') switchNav('add');
-      else if (pendingAction) { const a = pendingAction; pendingAction = null; showActionForm(a); }
-    } else { showErr(err, d.error || 'Invalid credentials'); }
-  } catch(e) { showErr(err, 'Connection error. Try again.'); }
-  btn.textContent = 'Sign In'; btn.disabled = false;
+      showToast('Welcome, '+d.fullName.split(' ')[0]+'! 👋');
+      if (pendingAction==='add') switchNav('add');
+      else if (pendingAction) { const a=pendingAction; pendingAction=null; showActionForm(a); }
+    } else showErr(err,d.error||'Invalid credentials');
+  } catch(e) { showErr(err,'Connection error. Try again.'); }
+  btn.textContent='Sign In'; btn.disabled=false;
 }
 function doLogout() {
-  currentUser = null; hideOverlay('usermenu-overlay'); updateUI();
+  currentUser=null; hideOverlay('usermenu-overlay'); updateUI();
   showToast('Signed out'); switchNav('scan');
 }
 function showUserMenu() {
   if (!currentUser) return;
-  document.getElementById('um-av').textContent = currentUser.fullName.charAt(0).toUpperCase();
-  document.getElementById('um-name').textContent = currentUser.fullName;
-  document.getElementById('um-user').textContent = '@' + currentUser.username;
+  document.getElementById('um-av').textContent=currentUser.fullName.charAt(0).toUpperCase();
+  document.getElementById('um-name').textContent=currentUser.fullName;
+  document.getElementById('um-user').textContent='@'+currentUser.username;
   showOverlay('usermenu-overlay');
 }
 function updateUI() {
-  const isUser = !!currentUser;
-  const isAdmin = isUser && currentUser.role === 'Admin';
-  document.getElementById('user-chip').style.display = isUser ? 'flex' : 'none';
-  document.getElementById('signin-btn').style.display = isUser ? 'none' : 'flex';
-  document.getElementById('nav-admin').style.display = isAdmin ? 'flex' : 'none';
+  const isUser=!!currentUser, isAdmin=isUser&&currentUser.role==='Admin';
+  document.getElementById('user-chip').style.display=isUser?'flex':'none';
+  document.getElementById('signin-btn').style.display=isUser?'none':'flex';
+  document.getElementById('nav-admin').style.display=isAdmin?'flex':'none';
   if (isUser) {
-    document.getElementById('user-av').textContent = currentUser.fullName.charAt(0).toUpperCase();
-    document.getElementById('user-nm').textContent = currentUser.fullName.split(' ')[0];
-    const rb = document.getElementById('role-badge');
-    rb.textContent = currentUser.role;
-    rb.className = 'role-badge ' + (isAdmin ? 'role-admin' : 'role-staff');
-    document.getElementById('n-addedby').value = currentUser.fullName;
-    document.getElementById('add-locked').style.display = 'none';
-    document.getElementById('add-form').style.display = 'block';
+    document.getElementById('user-av').textContent=currentUser.fullName.charAt(0).toUpperCase();
+    document.getElementById('user-nm').textContent=currentUser.fullName.split(' ')[0];
+    const rb=document.getElementById('role-badge');
+    rb.textContent=currentUser.role; rb.className='role-badge '+(isAdmin?'role-admin':'role-staff');
+    document.getElementById('n-addedby').value=currentUser.fullName;
+    document.getElementById('add-locked').style.display='none';
+    document.getElementById('add-form').style.display='block';
   } else {
-    document.getElementById('add-locked').style.display = 'block';
-    document.getElementById('add-form').style.display = 'none';
+    document.getElementById('add-locked').style.display='block';
+    document.getElementById('add-form').style.display='none';
   }
 }
 
+// PASSWORD REQUEST
+function showPasswordRequest() {
+  hideOverlay('usermenu-overlay');
+  document.getElementById('pwr-msg').value='';
+  document.getElementById('pwr-err').classList.remove('show');
+  document.getElementById('pwr-ok').classList.remove('show');
+  showOverlay('pwreq-overlay');
+}
+async function submitPasswordRequest() {
+  if (!currentUser) return;
+  const msg = document.getElementById('pwr-msg').value.trim();
+  const btn = document.getElementById('pwr-btn');
+  const ok = document.getElementById('pwr-ok');
+  const err = document.getElementById('pwr-err');
+  btn.innerHTML='<span class="spinner-sm"></span> Sending...'; btn.disabled=true;
+  try {
+    await api({
+      action:'passwordRequest',
+      username:currentUser.username,
+      fullName:currentUser.fullName,
+      message:msg||'No message provided'
+    });
+    ok.textContent='✓ Request sent! Admin will contact you shortly.'; ok.classList.add('show');
+    err.classList.remove('show');
+    setTimeout(()=>hideOverlay('pwreq-overlay'),2000);
+  } catch(e) { showErr(err,'Error sending request. Try again.'); }
+  btn.textContent='Send Request'; btn.disabled=false;
+}
+
 // ── OVERLAYS ─────────────────────────────────────────
-function showOverlay(id) { document.getElementById(id).style.display = 'flex'; }
-function hideOverlay(id) { document.getElementById(id).style.display = 'none'; }
-function overlayBgClick(e, id) { if (e.target.id === id) hideOverlay(id); }
+function showOverlay(id) { document.getElementById(id).style.display='flex'; }
+function hideOverlay(id) { document.getElementById(id).style.display='none'; }
+function overlayBgClick(e,id) { if(e.target.id===id) hideOverlay(id); }
 
 // ── NAV ───────────────────────────────────────────────
-function showScreen(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
+function showScreen(id) { document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
 function switchNav(tab) {
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  const nb = document.getElementById('nav-'+tab);
-  if (nb) nb.classList.add('active');
-  if (tab==='list') { showScreen('screen-list'); loadAssetList(); }
-  else if (tab==='add') { showScreen('screen-add'); updateUI(); }
-  else if (tab==='qr') { showScreen('screen-qr'); loadQRCodes(); }
-  else if (tab==='admin') { showScreen('screen-admin'); loadUsers(); }
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  const nb=document.getElementById('nav-'+tab); if(nb) nb.classList.add('active');
+  if(tab==='list'){showScreen('screen-list');loadAssetList();}
+  else if(tab==='add'){showScreen('screen-add');updateUI();}
+  else if(tab==='qr'){showScreen('screen-qr');loadQRCodes();}
+  else if(tab==='admin'){showScreen('screen-admin');loadUsers();}
   else showScreen('screen-scan');
 }
 function goBack() {
   stopScan();
   if (cameFromList) {
-    cameFromList = false;
-    showScreen('screen-list');
-    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    cameFromList=false; showScreen('screen-list');
+    document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
     document.getElementById('nav-list').classList.add('active');
-  } else {
-    showScreen('screen-scan');
-    switchNav('scan');
-  }
+  } else { showScreen('screen-scan'); switchNav('scan'); }
 }
 
 // ── API ───────────────────────────────────────────────
-async function api(params, usePost = false) {
+async function api(params, usePost=false) {
   if (usePost) {
-    const res = await fetch(API, {
-      method: 'POST',
-      body: new URLSearchParams(params).toString(),
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-    });
+    const res = await fetch(API, {method:'POST', body:new URLSearchParams(params).toString(), headers:{'Content-Type':'application/x-www-form-urlencoded'}});
     return res.json();
   }
-  const url = API + '?' + new URLSearchParams(params).toString();
-  const res = await fetch(url);
+  const res = await fetch(API+'?'+new URLSearchParams(params).toString());
   return res.json();
 }
 
 // ── SCANNER ───────────────────────────────────────────
 function startScan() {
-  document.getElementById('scan-idle').style.display = 'none';
-  document.getElementById('reader').style.display = 'block';
-  const btn = document.getElementById('btn-scan');
-  btn.innerHTML = '<span class="spinner-sm"></span> Scanning... (tap to stop)';
-  btn.onclick = stopScan;
-  if (!scanner) scanner = new Html5Qrcode("reader");
-  Html5Qrcode.getCameras().then(cams => {
-    if (!cams.length) { showToast('No camera found'); stopScan(); return; }
-    const cam = cams[cams.length-1];
-    scanner.start(cam.id, { fps:10, qrbox:200 }, text => {
-      stopScan(); lookupAsset(text.trim());
-    }, ()=>{}).catch(() => { showToast('Camera error — try manual entry'); stopScan(); });
-    scannerRunning = true;
-  }).catch(() => { showToast('Camera permission denied'); stopScan(); });
+  document.getElementById('scan-idle').style.display='none';
+  document.getElementById('reader').style.display='block';
+  const btn=document.getElementById('btn-scan');
+  btn.innerHTML='<span class="spinner-sm"></span> Scanning... (tap to stop)'; btn.onclick=stopScan;
+  if (!scanner) scanner=new Html5Qrcode("reader");
+  Html5Qrcode.getCameras().then(cams=>{
+    if(!cams.length){showToast('No camera found');stopScan();return;}
+    scanner.start(cams[cams.length-1].id,{fps:10,qrbox:200},text=>{stopScan();lookupAsset(text.trim());},()=>{})
+      .catch(()=>{showToast('Camera error — try manual entry');stopScan();});
+    scannerRunning=true;
+  }).catch(()=>{showToast('Camera permission denied');stopScan();});
 }
 function stopScan() {
-  if (scanner && scannerRunning) { scanner.stop().catch(()=>{}); scannerRunning = false; }
-  document.getElementById('scan-idle').style.display = 'flex';
-  document.getElementById('reader').style.display = 'none';
-  const btn = document.getElementById('btn-scan');
-  btn.innerHTML = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><rect x="7" y="7" width="10" height="10" rx="1"/></svg> Start Camera & Scan';
-  btn.onclick = startScan;
+  if(scanner&&scannerRunning){scanner.stop().catch(()=>{});scannerRunning=false;}
+  document.getElementById('scan-idle').style.display='flex';
+  document.getElementById('reader').style.display='none';
+  const btn=document.getElementById('btn-scan');
+  btn.innerHTML='<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><rect x="7" y="7" width="10" height="10" rx="1"/></svg> Start Camera & Scan';
+  btn.onclick=startScan;
 }
-function openAssetFromList(id) {
-  cameFromList = true;
-  showScreen('screen-detail');
-  lookupAsset(id);
-}
-
+function openAssetFromList(id) { cameFromList=true; showScreen('screen-detail'); lookupAsset(id); }
 function lookupManual() {
-  cameFromList = false;
-  const id = document.getElementById('manual-id').value.trim();
-  if (!id) return showToast('Please enter an Asset ID');
+  cameFromList=false;
+  const id=document.getElementById('manual-id').value.trim();
+  if(!id) return showToast('Please enter an Asset ID');
   lookupAsset(id);
 }
 
 // ── ASSET LOOKUP ──────────────────────────────────────
 async function lookupAsset(id) {
   showScreen('screen-detail');
-  document.getElementById('detail-content').innerHTML = '<div class="loading"><div class="spinner"></div><p style="margin-top:10px">Loading asset...</p></div>';
+  document.getElementById('detail-content').innerHTML='<div class="loading"><div class="spinner"></div><p style="margin-top:10px">Loading asset...</p></div>';
   try {
-    const [assetData, photoData] = await Promise.all([
-      api({ action:'getAsset', id }),
-      api({ action:'getPhotos', assetId:id })
-    ]);
-    if (!assetData.asset) {
-      document.getElementById('detail-content').innerHTML = `<div class="card" style="text-align:center;padding:28px"><div style="font-size:36px;margin-bottom:10px">🔍</div><div style="font-size:15px;font-weight:600;margin-bottom:5px">Asset Not Found</div><div style="font-size:13px;color:var(--text2)">No asset with ID: <strong>${id}</strong></div></div>`;
+    const [aD, pD] = await Promise.all([api({action:'getAsset',id}), api({action:'getPhotos',assetId:id})]);
+    if (!aD.asset) {
+      document.getElementById('detail-content').innerHTML=`<div class="card" style="text-align:center;padding:28px"><div style="font-size:36px;margin-bottom:10px">🔍</div><div style="font-size:15px;font-weight:600;margin-bottom:5px">Asset Not Found</div><div style="font-size:13px;color:var(--text2)">No asset with ID: <strong>${id}</strong></div></div>`;
       return;
     }
-    currentAsset = assetData.asset;
-    currentAsset._history = assetData.history || [];
-    currentAsset._photos = photoData.photos || [];
-    renderDetail(currentAsset, currentAsset._history, currentAsset._photos);
+    currentAsset=aD.asset; currentAsset._history=aD.history||[]; currentAsset._photos=pD.photos||[];
+    renderDetail(currentAsset,currentAsset._history,currentAsset._photos);
   } catch(e) {
-    document.getElementById('detail-content').innerHTML = '<div class="card"><p style="color:var(--red);text-align:center">Error loading asset. Check your connection.</p></div>';
+    document.getElementById('detail-content').innerHTML='<div class="card"><p style="color:var(--red);text-align:center">Error loading asset. Check your connection.</p></div>';
   }
 }
 
 function cbadge(c) {
-  if (!c) return '';
-  const m = {'New':'badge-blue','Good':'badge-green','Fair':'badge-amber','Poor':'badge-red'};
+  if(!c) return '';
+  const m={'New':'badge-blue','Good':'badge-green','Fair':'badge-amber','Poor':'badge-red'};
   return `<span class="badge ${m[c]||'badge-blue'}">${c}</span>`;
 }
 
+// ── GALLERY ───────────────────────────────────────────
 function renderGallery(photos) {
-  if (!photos || !photos.length) return '';
-  let html = '<div class="gallery-section">';
-  photos.forEach(group => {
-    const urls = group.photoUrls ? group.photoUrls.split(',').filter(u=>u.trim()) : [];
-    if (!urls.length) return;
-    const actionLabel = group.actionType==='Allocated'?'📤 Allocated':group.actionType==='Returned'?'📥 Returned':'📦 Asset Added';
-    const dateStr = group.timestamp ? new Date(group.timestamp).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}) : '';
+  if (!photos||!photos.length) return '<div class="gallery-empty">No photos uploaded yet</div>';
+  let html='';
+  photos.forEach((group,gi) => {
+    const rawUrls = (group.photoUrls||'').split(',').map(u=>u.trim()).filter(u=>u.length>10);
+    if (!rawUrls.length) return;
+    // Convert any old drive URLs to thumbnail format
+    const urls = rawUrls.map(u => {
+      const m = u.match(/[?&]id=([^&]+)/); // extract file ID from old format
+      if (m) return 'https://lh3.googleusercontent.com/d/'+m[1];
+      // already new format or direct
+      return u;
+    });
+    const label = group.actionType==='Allocated'?'📤 Allocated':group.actionType==='Returned'?'📥 Returned':'📦 Added';
+    const dateStr = group.timestamp?new Date(group.timestamp).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}):'';
+    const uploadedBy = group.uploadedBy||'';
     html += `<div class="gallery-group">
-      <div class="gallery-group-title">
-        <span>${actionLabel}</span>
-        <span style="font-weight:400;color:var(--text3)">${dateStr} · ${group.uploadedBy||''}</span>
+      <div class="gallery-group-label">
+        <span>${label}</span>
+        <span style="font-weight:400;opacity:.7">${dateStr}</span>
+        ${uploadedBy?`<span style="font-weight:400;opacity:.7">by ${uploadedBy}</span>`:''}
       </div>
       <div class="gallery-slider">
-        ${urls.map((url,i)=>`<img class="gallery-img" src="${url.trim()}" alt="photo" loading="lazy" onclick="openLightbox(${JSON.stringify(urls)},${i})">`).join('')}
+        ${urls.map((url,i)=>`<img class="gallery-img" src="${url}" loading="lazy" onerror="this.style.display='none'" onclick="openLightbox(${JSON.stringify(urls)},${i})" alt="Asset photo">`).join('')}
       </div>
     </div>`;
   });
-  html += '</div>';
-  return html;
+  return html || '<div class="gallery-empty">No photos uploaded yet</div>';
 }
 
 function renderDetail(a, history, photos) {
-  const holder = a['Current Holder'] || 'Unassigned';
-  const isAdmin = currentUser && currentUser.role === 'Admin';
-  const hist = [...history].reverse();
+  const holder=a['Current Holder']||'Unassigned';
+  const isAdmin=currentUser&&currentUser.role==='Admin';
+  const hist=[...history].reverse();
+  const cat = a['Category']||''; const subcat = a['Sub Category']||'';
 
   const actionBtns = currentUser
     ? `<div class="btn-row no-print">
         <button class="btn btn-green" onclick="showActionForm('allocate')">➕ New Allocation</button>
         <button class="btn btn-red" onclick="showActionForm('return')">↩ Return Asset</button>
        </div>
-       ${isAdmin ? `<button class="btn btn-secondary" style="margin-top:8px;border-color:var(--red);color:var(--red)" onclick="confirmDelete('${a['Asset ID']}','${(a['Asset Name']||'').replace(/'/g,"\\'")}')">🗑 Delete Asset (Admin)</button>` : ''}`
+       ${isAdmin?`<button class="btn btn-secondary" style="margin-top:8px;border-color:var(--red);color:var(--red)" onclick="confirmDelete('${a['Asset ID']}','${(a['Asset Name']||'').replace(/'/g,"\\'")}')">🗑 Delete Asset (Admin)</button>`:''}`
     : `<div class="btn-row no-print">
         <div class="action-locked" onclick="showLoginOverlay('allocate')">🔒 Sign in to Allocate</div>
         <div class="action-locked" onclick="showLoginOverlay('return')">🔒 Sign in to Return</div>
        </div>`;
 
-  const galleryHtml = renderGallery(photos);
-
-  document.getElementById('detail-content').innerHTML = `
+  document.getElementById('detail-content').innerHTML=`
     <div class="card">
       <div class="asset-header">
         <div>
@@ -856,7 +842,7 @@ function renderDetail(a, history, photos) {
         </div>
         ${cbadge(a['Condition'])}
       </div>
-      <div class="detail-row"><span class="dk">Category</span><span class="dv">${a['Category']||'—'}</span></div>
+      <div class="detail-row"><span class="dk">Category</span><span class="dv">${cat}${subcat?' › '+subcat:''}</span></div>
       <div class="detail-row"><span class="dk">Brand / Model</span><span class="dv">${a['Brand/Model']||'—'}</span></div>
       <div class="detail-row"><span class="dk">Serial No.</span><span class="dv" style="font-family:'DM Mono',monospace;font-size:12px">${a['Serial Number']||'—'}</span></div>
       <div class="detail-row"><span class="dk">Purchase Date</span><span class="dv">${a['Purchase Date']||'—'}</span></div>
@@ -873,12 +859,15 @@ function renderDetail(a, history, photos) {
       ${a['Department']?`<div style="font-size:12px;color:var(--text2);margin-top:4px">${a['Department']}</div>`:''}
     </div>
     ${actionBtns}
-    ${galleryHtml ? `<div class="card" style="margin-top:10px"><div class="card-title">Photo Gallery</div>${galleryHtml}</div>` : ''}
+    <div class="card" style="margin-top:10px">
+      <div class="card-title">Photo Gallery (${photos.length} upload${photos.length!==1?'s':''})</div>
+      ${renderGallery(photos)}
+    </div>
     <div class="card" style="margin-top:10px">
       <div class="card-title">Allocation History (${hist.length})</div>
       ${hist.length===0
-        ? '<div style="font-size:13px;color:var(--text3);text-align:center;padding:14px 0">No history yet</div>'
-        : hist.map(h=>`
+        ?'<div style="font-size:13px;color:var(--text3);text-align:center;padding:14px 0">No history yet</div>'
+        :hist.map(h=>`
           <div class="history-item">
             <div class="history-meta">
               <span class="badge ${h['Action']==='Allocated'?'badge-green':'badge-red'}">${h['Action']||'—'}</span>
@@ -895,88 +884,75 @@ function renderDetail(a, history, photos) {
 }
 
 // ── LIGHTBOX ──────────────────────────────────────────
-function openLightbox(images, index) {
-  lightboxImages = Array.isArray(images) ? images : [images];
-  lightboxIndex = index || 0;
-  updateLightbox();
-  document.getElementById('lightbox').style.display = 'flex';
+function openLightbox(images,index) {
+  lightboxImages=Array.isArray(images)?images:[images]; lightboxIndex=index||0;
+  updateLightbox(); document.getElementById('lightbox').style.display='flex';
 }
 function updateLightbox() {
-  document.getElementById('lightbox-img').src = lightboxImages[lightboxIndex].trim();
-  document.getElementById('lightbox-info').textContent = (lightboxIndex+1) + ' / ' + lightboxImages.length;
-  document.getElementById('lightbox-prev').style.display = lightboxImages.length > 1 ? 'flex' : 'none';
-  document.getElementById('lightbox-next').style.display = lightboxImages.length > 1 ? 'flex' : 'none';
+  document.getElementById('lightbox-img').src=lightboxImages[lightboxIndex].trim();
+  document.getElementById('lightbox-info').textContent=(lightboxIndex+1)+' / '+lightboxImages.length;
+  document.getElementById('lightbox-prev').style.display=lightboxImages.length>1?'flex':'none';
+  document.getElementById('lightbox-next').style.display=lightboxImages.length>1?'flex':'none';
 }
-function lightboxNav(dir) {
-  lightboxIndex = (lightboxIndex + dir + lightboxImages.length) % lightboxImages.length;
-  updateLightbox();
-}
-function closeLightbox() { document.getElementById('lightbox').style.display = 'none'; }
-document.addEventListener('keydown', e => {
-  if (document.getElementById('lightbox').style.display !== 'none') {
-    if (e.key==='ArrowLeft') lightboxNav(-1);
-    if (e.key==='ArrowRight') lightboxNav(1);
-    if (e.key==='Escape') closeLightbox();
+function lightboxNav(dir) { lightboxIndex=(lightboxIndex+dir+lightboxImages.length)%lightboxImages.length; updateLightbox(); }
+function closeLightbox() { document.getElementById('lightbox').style.display='none'; }
+document.addEventListener('keydown',e=>{
+  if(document.getElementById('lightbox').style.display!=='none'){
+    if(e.key==='ArrowLeft')lightboxNav(-1);
+    if(e.key==='ArrowRight')lightboxNav(1);
+    if(e.key==='Escape')closeLightbox();
   }
 });
 
 // ── PHOTO UPLOAD ──────────────────────────────────────
-function handlePhotoSelect(input, context) {
-  const files = Array.from(input.files);
-  const existing = photoState[context] || [];
-  const remaining = 5 - existing.length;
-  const toAdd = files.slice(0, remaining);
-  if (files.length > remaining) showToast(`Max 5 photos. Added ${toAdd.length}.`);
-  toAdd.forEach(file => {
-    const reader = new FileReader();
-    reader.onload = e => {
-      photoState[context].push({ file, dataUrl: e.target.result, uploaded: false, url: null });
-      renderPhotoPreviews(context);
-    };
-    reader.readAsDataURL(file);
+function handlePhotoSelect(input,context) {
+  const files=Array.from(input.files);
+  const remaining=5-(photoState[context]||[]).length;
+  const toAdd=files.slice(0,remaining);
+  if(files.length>remaining) showToast(`Max 5 photos. Added ${toAdd.length}.`);
+  toAdd.forEach(file=>{
+    const r=new FileReader();
+    r.onload=e=>{ photoState[context].push({file,dataUrl:e.target.result,url:null}); renderPhotoPreviews(context); };
+    r.readAsDataURL(file);
   });
-  input.value = '';
+  input.value='';
 }
 function renderPhotoPreviews(context) {
-  const grid = document.getElementById(context+'-photo-previews');
-  if (!grid) return;
-  const photos = photoState[context] || [];
-  grid.innerHTML = photos.map((p,i) => `
+  const grid=document.getElementById(context+'-photo-previews');
+  if(!grid) return;
+  grid.innerHTML=(photoState[context]||[]).map((p,i)=>`
     <div class="photo-thumb">
-      <img src="${p.dataUrl}" alt="photo">
+      <img src="${p.dataUrl}" alt="">
       <button class="remove-btn" onclick="removePhoto('${context}',${i})">✕</button>
     </div>`).join('');
-  const area = document.getElementById(context+'-upload-area');
-  if (area) area.style.display = photos.length >= 5 ? 'none' : 'block';
+  const area=document.getElementById(context+'-upload-area');
+  if(area) area.style.display=(photoState[context]||[]).length>=5?'none':'block';
 }
-function removePhoto(context, index) {
-  photoState[context].splice(index, 1);
-  renderPhotoPreviews(context);
-}
-async function uploadPhotos(context, assetId) {
-  const photos = photoState[context] || [];
-  if (!photos.length) return [];
-  const urls = [];
-  for (let i = 0; i < photos.length; i++) {
-    const p = photos[i];
+function removePhoto(context,index) { photoState[context].splice(index,1); renderPhotoPreviews(context); }
+
+async function uploadPhotos(context,assetId) {
+  const photos=photoState[context]||[];
+  if(!photos.length) return [];
+  const urls=[];
+  for(let i=0;i<photos.length;i++){
     try {
-      const base64 = p.dataUrl.split(',')[1];
-      const mimeType = p.file.type || 'image/jpeg';
-      const filename = assetId + '_' + context + '_' + Date.now() + '_' + i + '.jpg';
-      const d = await api({ action:'uploadPhoto', data:base64, mimeType, filename, assetId }, true);
-      if (d.success && d.url) urls.push(d.url);
-    } catch(e) { console.error('Upload error', e); }
+      const p=photos[i];
+      const base64=p.dataUrl.split(',')[1];
+      const d=await api({action:'uploadPhoto',data:base64,mimeType:p.file.type||'image/jpeg',filename:assetId+'_'+context+'_'+i+'.jpg',assetId},true);
+      if(d.success&&d.url) urls.push(d.url);
+      else if(d.error) console.error('Upload error:',d.error);
+    } catch(e){ console.error('Upload failed',e); }
   }
   return urls;
 }
 
 // ── ACTION FORM ───────────────────────────────────────
 function showActionForm(type) {
-  if (!currentUser) { showLoginOverlay(type); return; }
-  if (!currentAsset) return;
-  photoState.action = [];
-  const isAlloc = type==='allocate';
-  document.getElementById('action-content').innerHTML = `
+  if(!currentUser){showLoginOverlay(type);return;}
+  if(!currentAsset) return;
+  photoState.action=[];
+  const isAlloc=type==='allocate';
+  document.getElementById('action-content').innerHTML=`
     <div class="section-title">${isAlloc?'New Allocation':'Return Asset'}</div>
     <div class="card" style="background:${isAlloc?'var(--green-light)':'var(--red-light)'};border-color:${isAlloc?'var(--green)':'var(--red)'}">
       <div style="font-weight:600;font-size:14px">${currentAsset['Asset Name']}</div>
@@ -985,25 +961,26 @@ function showActionForm(type) {
     <div class="card">
       <div class="card-title">${isAlloc?'Allocation Details':'Return Details'}</div>
       ${isAlloc?`
-        <div class="field"><label>Issuing To (Person Name) *</label><input type="text" id="af-person" placeholder="Full name of recipient"></div>
+        <div class="field"><label>Issuing To *</label><input type="text" id="af-person" placeholder="Full name of recipient"></div>
         <div class="field"><label>Department *</label><input type="text" id="af-dept" placeholder="Department / Team" value="${currentAsset['Department']||''}"></div>
         <div class="field"><label>Date of Issue *</label><input type="date" id="af-date" value="${today()}"></div>
         <div class="field"><label>Condition at Issue</label><select id="af-cond"><option>New</option><option selected>Good</option><option>Fair</option><option>Poor</option></select></div>
         <div class="field"><label>Issued By *</label><input type="text" id="af-by" value="${currentUser.fullName}"></div>
         <div class="field"><label>Notes</label><textarea id="af-notes" placeholder="Any notes..."></textarea></div>
       `:`
-        <div class="field"><label>Returned By (Person Name) *</label><input type="text" id="af-person" placeholder="Name of person returning" value="${currentAsset['Current Holder']||''}"></div>
+        <div class="field"><label>Returned By *</label><input type="text" id="af-person" placeholder="Name of person returning" value="${currentAsset['Current Holder']||''}"></div>
         <div class="field"><label>Date of Return *</label><input type="date" id="af-date" value="${today()}"></div>
         <div class="field"><label>Condition on Return *</label><select id="af-cond"><option>New</option><option>Good</option><option>Fair</option><option selected>Poor</option></select></div>
         <div class="field"><label>Received By *</label><input type="text" id="af-by" value="${currentUser.fullName}"></div>
-        <div class="field"><label>Notes / Damage Report</label><textarea id="af-notes" placeholder="Condition, damage, reason..."></textarea></div>
+        <div class="field"><label>Notes / Damage</label><textarea id="af-notes" placeholder="Condition, damage, reason..."></textarea></div>
       `}
       <div class="field">
-        <label>${isAlloc?'Photos at time of issue':'Photos at time of return'} (up to 5)</label>
+        <label>${isAlloc?'Photos at issue time':'Photos at return time'} — up to 5</label>
         <div class="photo-upload-area" id="action-upload-area" onclick="document.getElementById('action-photos-input').click()">
           <input type="file" id="action-photos-input" accept="image/*" multiple style="display:none" onchange="handlePhotoSelect(this,'action')">
-          <div style="font-size:13px;color:var(--text2);font-weight:500">📷 Tap to add photos</div>
-          <div style="font-size:11px;color:var(--text3);margin-top:3px">Compare condition before/after</div>
+          <div style="font-size:24px;margin-bottom:6px">📷</div>
+          <div style="font-size:13px;color:var(--text2);font-weight:500">Tap to add photos</div>
+          <div style="font-size:11px;color:var(--text3);margin-top:3px">Compare condition before / after</div>
         </div>
         <div class="photo-preview-grid" id="action-photo-previews"></div>
       </div>
@@ -1015,439 +992,242 @@ function showActionForm(type) {
 }
 
 async function submitAction(type) {
-  const person = document.getElementById('af-person').value.trim();
-  const by = document.getElementById('af-by').value.trim();
-  const date = document.getElementById('af-date').value;
-  const cond = document.getElementById('af-cond').value;
-  const notes = document.getElementById('af-notes').value.trim();
-  const dept = type==='allocate' ? document.getElementById('af-dept').value.trim() : (currentAsset['Department']||'');
-  if (!person||!by||!date) return showToast('Please fill all required fields');
-  const btn = document.getElementById('af-submit');
-  const isAlloc = type==='allocate';
-  btn.innerHTML = '<span class="spinner-sm"></span> Uploading photos...'; btn.disabled = true;
+  const person=document.getElementById('af-person').value.trim();
+  const by=document.getElementById('af-by').value.trim();
+  const date=document.getElementById('af-date').value;
+  const cond=document.getElementById('af-cond').value;
+  const notes=document.getElementById('af-notes').value.trim();
+  const dept=type==='allocate'?document.getElementById('af-dept').value.trim():(currentAsset['Department']||'');
+  if(!person||!by||!date) return showToast('Please fill all required fields');
+  const btn=document.getElementById('af-submit');
+  const isAlloc=type==='allocate';
+  btn.innerHTML='<span class="spinner-sm"></span> Uploading photos...'; btn.disabled=true;
   try {
-    const photoUrls = await uploadPhotos('action', currentAsset['Asset ID']);
-    btn.innerHTML = '<span class="spinner-sm"></span> Saving...';
-    await api({ action:'addHistory', assetId:currentAsset['Asset ID'], assetName:currentAsset['Asset Name'],
-      actionType:isAlloc?'Allocated':'Returned', issuedTo:isAlloc?person:'',
-      receivedFrom:isAlloc?'':person, department:dept, condition:cond, notes, doneBy:by });
-    await api({ action:'updateAsset', assetId:currentAsset['Asset ID'],
-      currentHolder:isAlloc?person:'Unassigned', condition:cond, department:dept });
-    if (photoUrls.length) {
-      await api({ action:'savePhotos', assetId:currentAsset['Asset ID'], assetName:currentAsset['Asset Name'],
-        actionType:isAlloc?'Allocated':'Returned', photoUrls:photoUrls.join(','), uploadedBy:by });
+    const photoUrls=await uploadPhotos('action',currentAsset['Asset ID']);
+    btn.innerHTML='<span class="spinner-sm"></span> Saving...';
+    await api({action:'addHistory',assetId:currentAsset['Asset ID'],assetName:currentAsset['Asset Name'],
+      actionType:isAlloc?'Allocated':'Returned',issuedTo:isAlloc?person:'',
+      receivedFrom:isAlloc?'':person,department:dept,condition:cond,notes,doneBy:by});
+    await api({action:'updateAsset',assetId:currentAsset['Asset ID'],
+      currentHolder:isAlloc?person:'Unassigned',condition:cond,department:dept});
+    if(photoUrls.length) {
+      await api({action:'savePhotos',assetId:currentAsset['Asset ID'],assetName:currentAsset['Asset Name'],
+        actionType:isAlloc?'Allocated':'Returned',photoUrls:photoUrls.join(','),uploadedBy:by});
     }
-    photoState.action = [];
+    photoState.action=[];
     showToast(isAlloc?'✓ Allocated! Email sent.':'✓ Return recorded! Email sent.');
     lookupAsset(currentAsset['Asset ID']);
-  } catch(e) { showToast('Error saving. Check connection.'); }
-  btn.textContent = isAlloc?'✓ Confirm Allocation':'✓ Confirm Return'; btn.disabled = false;
+  } catch(e){ showToast('Error saving. Check connection.'); }
+  btn.textContent=isAlloc?'✓ Confirm Allocation':'✓ Confirm Return'; btn.disabled=false;
 }
 
 // ── ADD ASSET ─────────────────────────────────────────
 async function checkSerial(val) {
-  const warn = document.getElementById('serial-warn');
-  if (!val || val.length < 3) { warn.classList.remove('show'); serialDuplicate = false; return; }
+  const warn=document.getElementById('serial-warn');
+  if(!val||val.length<3){warn.classList.remove('show');serialDuplicate=false;return;}
   clearTimeout(serialCheckTimer);
-  serialCheckTimer = setTimeout(async () => {
+  serialCheckTimer=setTimeout(async()=>{
     try {
-      const d = await api({ action:'checkSerial', serial:val });
-      if (d.duplicate) {
-        warn.textContent = `⚠️ Duplicate! Already used by "${d.assetName}" (${d.assetId}). Please modify the serial number.`;
-        warn.classList.add('show'); serialDuplicate = true;
-      } else { warn.classList.remove('show'); serialDuplicate = false; }
-    } catch(e) {}
-  }, 700);
+      const d=await api({action:'checkSerial',serial:val});
+      if(d.duplicate){
+        warn.textContent=`⚠️ Duplicate! Already used by "${d.assetName}" (${d.assetId}). Please modify the serial number.`;
+        warn.classList.add('show');serialDuplicate=true;
+      } else {warn.classList.remove('show');serialDuplicate=false;}
+    } catch(e){}
+  },700);
 }
 
 async function saveAsset() {
-  if (!currentUser) return showLoginOverlay('add');
-  if (serialDuplicate) return showToast('Fix the duplicate serial number first');
-  const name = document.getElementById('n-name').value.trim();
-  const cat = document.getElementById('n-cat').value;
-  const cond = document.getElementById('n-cond').value;
-  const addedBy = document.getElementById('n-addedby').value.trim();
-  if (!name||!cat||!cond||!addedBy) return showToast('Please fill all required fields (*)');
-  const btn = document.getElementById('save-asset-btn');
-  btn.innerHTML = '<span class="spinner-sm"></span> Uploading photos...'; btn.disabled = true;
-  const id = 'AST-' + Date.now().toString(36).toUpperCase().slice(-6);
+  if(!currentUser) return showLoginOverlay('add');
+  if(serialDuplicate) return showToast('Fix the duplicate serial number first');
+  const name=document.getElementById('n-name').value.trim();
+  const maincat=document.getElementById('n-maincat').value;
+  const subcat=document.getElementById('n-subcat').value;
+  const cond=document.getElementById('n-cond').value;
+  const addedBy=document.getElementById('n-addedby').value.trim();
+  if(!name||!maincat||!cond||!addedBy) return showToast('Please fill all required fields (*)');
+  const btn=document.getElementById('save-asset-btn');
+  btn.innerHTML='<span class="spinner-sm"></span> Uploading photos...'; btn.disabled=true;
+  const id='AST-'+Date.now().toString(36).toUpperCase().slice(-6);
   try {
-    const photoUrls = await uploadPhotos('add', id);
-    btn.innerHTML = '<span class="spinner-sm"></span> Saving asset...';
-    await api({ action:'addAsset', assetId:id, assetName:name, category:cat,
+    const photoUrls=await uploadPhotos('add',id);
+    btn.innerHTML='<span class="spinner-sm"></span> Saving asset...';
+    await api({action:'addAsset',assetId:id,assetName:name,category:maincat,subCategory:subcat,
       brandModel:document.getElementById('n-brand').value.trim(),
       serialNumber:document.getElementById('n-serial').value.trim(),
       purchaseDate:document.getElementById('n-date').value,
       purchaseCost:document.getElementById('n-cost').value,
-      condition:cond, currentHolder:document.getElementById('n-holder').value.trim()||'Unassigned',
+      condition:cond,currentHolder:document.getElementById('n-holder').value.trim()||'Unassigned',
       department:document.getElementById('n-dept').value.trim(),
       description:document.getElementById('n-desc').value.trim(),
-      mediaLink:photoUrls.join(','), addedBy });
-    if (photoUrls.length) {
-      await api({ action:'savePhotos', assetId:id, assetName:name, actionType:'Asset Added',
-        photoUrls:photoUrls.join(','), uploadedBy:addedBy });
+      mediaLink:photoUrls.join(','),addedBy});
+    if(photoUrls.length){
+      await api({action:'savePhotos',assetId:id,assetName:name,actionType:'Asset Added',
+        photoUrls:photoUrls.join(','),uploadedBy:addedBy});
     }
-    showToast('✓ Asset saved! ID: ' + id);
+    showToast('✓ Asset saved! ID: '+id);
     ['n-name','n-brand','n-serial','n-cost','n-holder','n-dept','n-desc'].forEach(f=>document.getElementById(f).value='');
-    document.getElementById('n-cat').value=''; document.getElementById('n-cond').value='';
-    document.getElementById('n-date').value=''; document.getElementById('n-addedby').value = currentUser ? currentUser.fullName : '';
+    document.getElementById('n-maincat').value=''; document.getElementById('n-subcat').value='';
+    document.getElementById('n-cond').value=''; document.getElementById('n-date').value='';
+    document.getElementById('n-addedby').value=currentUser?currentUser.fullName:'';
     document.getElementById('serial-warn').classList.remove('show');
-    document.getElementById('add-photo-previews').innerHTML = '';
-    document.getElementById('add-upload-area').style.display = 'block';
-    photoState.add = []; serialDuplicate = false;
+    document.getElementById('add-photo-previews').innerHTML='';
+    document.getElementById('add-upload-area').style.display='block';
+    photoState.add=[]; serialDuplicate=false;
     switchNav('list');
-  } catch(e) { showToast('Error saving. Check connection.'); }
-  btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg> Save Asset & Generate QR';
-  btn.disabled = false;
+  } catch(e){ showToast('Error saving. Check connection.'); }
+  btn.innerHTML='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg> Save Asset & Generate QR';
+  btn.disabled=false;
 }
 
 // ── ASSET LIST ────────────────────────────────────────
-const catEmoji = {'IT Equipment':'💻','Furniture':'🪑','Tools':'🔧','Vehicle':'🚗','Electronics':'📱','Office Equipment':'🖨️','Other':'📦'};
-const catColor = {
-  'IT Equipment':  { bg:'#EBF0FD', color:'#2D5BE3', bar:'#2D5BE3' },
-  'Furniture':     { bg:'#FEF3C7', color:'#B45309', bar:'#F59E0B' },
-  'Tools':         { bg:'#F3F4F6', color:'#374151', bar:'#6B7280' },
-  'Vehicle':       { bg:'#E6F5EF', color:'#1A7F5A', bar:'#1A7F5A' },
-  'Electronics':   { bg:'#FDF2F8', color:'#9D174D', bar:'#EC4899' },
-  'Office Equipment':{ bg:'#FFF7ED', color:'#C2410C', bar:'#EA580C' },
-  'Other':         { bg:'#F9F8F5', color:'#6B6860', bar:'#A8A69F' }
-};
-const condOrder = { 'New':0, 'Good':1, 'Fair':2, 'Poor':3 };
-
 async function loadAssetList() {
-  document.getElementById('asset-list').innerHTML = '<div class="loading"><div class="spinner"></div></div>';
-  document.getElementById('stats-row').innerHTML = '';
-  document.getElementById('cat-chips').innerHTML = '';
+  document.getElementById('asset-list').innerHTML='<div class="loading"><div class="spinner"></div></div>';
+  document.getElementById('stats-row').innerHTML='';
   try {
-    const d = await api({ action:'getAllAssets' });
-    allAssets = d.assets || [];
-    renderStats();
-    renderCategoryChips();
-    renderList();
-  } catch(e) {
-    document.getElementById('asset-list').innerHTML = '<p style="color:var(--red);text-align:center;padding:20px">Could not load assets. Check connection.</p>';
-  }
+    const d=await api({action:'getAllAssets'});
+    allAssets=d.assets||[];
+    renderStats(); renderCategoryTree(); renderList();
+  } catch(e){ document.getElementById('asset-list').innerHTML='<p style="color:var(--red);text-align:center;padding:20px">Could not load assets.</p>'; }
 }
 
 function renderStats() {
-  const total    = allAssets.length;
-  const assigned = allAssets.filter(a => a['Current Holder'] && a['Current Holder'] !== 'Unassigned').length;
-  const available = total - assigned;
-  const poor     = allAssets.filter(a => a['Condition'] === 'Poor').length;
-  document.getElementById('stats-row').innerHTML = `
-    <div class="stat-card" style="cursor:pointer" onclick="setFilter('all');setCatFilter('all')">
-      <div class="stat-num">${total}</div><div class="stat-label">Total</div>
-    </div>
-    <div class="stat-card" style="cursor:pointer" onclick="setFilter('available');setCatFilter('all')">
-      <div class="stat-num" style="color:var(--green)">${available}</div><div class="stat-label">Available</div>
-    </div>
-    <div class="stat-card" style="cursor:pointer" onclick="setFilter('assigned');setCatFilter('all')">
-      <div class="stat-num" style="color:var(--accent)">${assigned}</div><div class="stat-label">Assigned</div>
-    </div>`;
+  const total=allAssets.length;
+  const assigned=allAssets.filter(a=>a['Current Holder']&&a['Current Holder']!=='Unassigned').length;
+  const available=total-assigned;
+  document.getElementById('stats-row').innerHTML=`
+    <div class="stat-card" onclick="setFilter('all');setMainCat('all')"><div class="stat-num">${total}</div><div class="stat-label">Total</div></div>
+    <div class="stat-card" onclick="setFilter('available');setMainCat('all')"><div class="stat-num" style="color:var(--green)">${available}</div><div class="stat-label">Available</div></div>
+    <div class="stat-card" onclick="setFilter('assigned');setMainCat('all')"><div class="stat-num" style="color:var(--accent)">${assigned}</div><div class="stat-label">Assigned</div></div>`;
 }
 
-function renderCategoryChips() {
-  const counts = {};
-  allAssets.forEach(a => {
-    const c = a['Category'] || 'Other';
-    counts[c] = (counts[c] || 0) + 1;
-  });
-  const chips = document.getElementById('cat-chips');
-  chips.innerHTML = '';
+function renderCategoryTree() {
+  const chips=document.getElementById('cat-main-chips');
+  // count per main cat
+  const counts={};
+  allAssets.forEach(a=>{ const c=a['Category']||'Other'; counts[c]=(counts[c]||0)+1; });
 
-  // "All" chip
-  const allChip = document.createElement('div');
-  allChip.className = 'cat-chip active';
-  allChip.id = 'cchip-all';
-  allChip.style.cssText = 'background:#1C1B18;color:#fff;border-color:#1C1B18';
-  allChip.innerHTML = `All <span class="cat-chip-count">${allAssets.length}</span>`;
-  allChip.onclick = () => setCatFilter('all');
-  chips.appendChild(allChip);
-
-  Object.entries(counts).sort((a,b) => b[1]-a[1]).forEach(([cat, count]) => {
-    const col = catColor[cat] || catColor['Other'];
-    const chip = document.createElement('div');
-    chip.className = 'cat-chip';
-    chip.id = 'cchip-' + cat.replace(/\s+/g,'-');
-    chip.style.cssText = `background:${col.bg};color:${col.color}`;
-    chip.innerHTML = `${catEmoji[cat]||'📦'} ${cat} <span class="cat-chip-count">${count}</span>`;
-    chip.onclick = () => setCatFilter(cat);
-    chips.appendChild(chip);
+  let html=`<div class="cat-chip active" id="cchip-all" style="background:#1C1B18;color:#fff" onclick="setMainCat('all')">All <span class="cat-chip-count">${allAssets.length}</span></div>`;
+  Object.entries(CATEGORIES).forEach(([cat,cfg])=>{
+    if(!counts[cat]) return;
+    html+=`<div class="cat-chip" id="cchip-${cat.replace(/\s+/g,'_')}" style="background:${cfg.bg};color:${cfg.color}" onclick="setMainCat('${cat.replace(/'/g,"\\'")}')">${cfg.emoji} ${cat} <span class="cat-chip-count">${counts[cat]}</span></div>`;
   });
+  chips.innerHTML=html;
 }
 
-function setCatFilter(cat) {
-  currentCatFilter = cat;
-  document.querySelectorAll('.cat-chip').forEach(c => {
-    c.classList.remove('active');
-    c.style.borderColor = 'transparent';
-  });
-  const active = document.getElementById('cchip-' + (cat === 'all' ? 'all' : cat.replace(/\s+/g,'-')));
-  if (active) {
-    active.classList.add('active');
-    const col = cat === 'all' ? { color:'#1C1B18' } : (catColor[cat] || catColor['Other']);
-    active.style.borderColor = col.color;
-  }
+function setMainCat(cat) {
+  currentMainCat=cat; currentSubCat='all';
+  // update chip styles
+  document.querySelectorAll('.cat-chip').forEach(c=>c.classList.remove('active'));
+  const id='cchip-'+(cat==='all'?'all':cat.replace(/\s+/g,'_'));
+  const el=document.getElementById(id); if(el) el.classList.add('active');
+  // show sub chips
+  const subRow=document.getElementById('sub-cat-row');
+  const subChips=document.getElementById('sub-cat-chips');
+  if(cat!=='all'&&CATEGORIES[cat]){
+    const subCounts={};
+    allAssets.filter(a=>(a['Category']||'Other')===cat).forEach(a=>{ const s=a['Sub Category']||''; if(s) subCounts[s]=(subCounts[s]||0)+1; });
+    let html=`<div class="sub-chip active" id="sch-all" onclick="setSubCat('all')">All</div>`;
+    CATEGORIES[cat].subs.forEach(s=>{ if(subCounts[s]) html+=`<div class="sub-chip" id="sch-${s.replace(/\s+/g,'_')}" onclick="setSubCat('${s.replace(/'/g,"\\'")}')">${s} <span style="opacity:.6">${subCounts[s]}</span></div>`; });
+    subChips.innerHTML=html; subRow.style.display='block';
+  } else { subRow.style.display='none'; }
+  renderList();
+}
+
+function setSubCat(sub) {
+  currentSubCat=sub;
+  document.querySelectorAll('.sub-chip').forEach(c=>c.classList.remove('active'));
+  const id='sch-'+(sub==='all'?'all':sub.replace(/\s+/g,'_'));
+  const el=document.getElementById(id); if(el) el.classList.add('active');
   renderList();
 }
 
 function setFilter(f) {
-  currentFilter = f;
-  document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+  currentFilter=f;
+  document.querySelectorAll('.filter-tab').forEach(t=>t.classList.remove('active'));
   document.getElementById('ftab-'+f).classList.add('active');
   renderList();
 }
-
-function filterAssets(q) {
-  searchQuery = q;
-  renderList();
-}
+function filterAssets(q) { searchQuery=q; renderList(); }
 
 function renderList() {
-  let assets = allAssets;
-
-  // Status filter
-  if (currentFilter === 'available') assets = assets.filter(a => !a['Current Holder'] || a['Current Holder']==='Unassigned');
-  if (currentFilter === 'assigned')  assets = assets.filter(a => a['Current Holder'] && a['Current Holder']!=='Unassigned');
-
-  // Category filter
-  if (currentCatFilter !== 'all') assets = assets.filter(a => (a['Category']||'Other') === currentCatFilter);
-
-  // Search
-  if (searchQuery) {
-    const lo = searchQuery.toLowerCase();
-    assets = assets.filter(a =>
-      (a['Asset Name']||'').toLowerCase().includes(lo)||
-      (a['Category']||'').toLowerCase().includes(lo)||
-      (a['Current Holder']||'').toLowerCase().includes(lo)||
-      (a['Asset ID']||'').toLowerCase().includes(lo)||
-      (a['Department']||'').toLowerCase().includes(lo)||
-      (a['Brand/Model']||'').toLowerCase().includes(lo)||
-      (a['Serial Number']||'').toLowerCase().includes(lo)
-    );
+  let assets=allAssets;
+  if(currentFilter==='available') assets=assets.filter(a=>!a['Current Holder']||a['Current Holder']==='Unassigned');
+  if(currentFilter==='assigned') assets=assets.filter(a=>a['Current Holder']&&a['Current Holder']!=='Unassigned');
+  if(currentMainCat!=='all') assets=assets.filter(a=>(a['Category']||'Other')===currentMainCat);
+  if(currentSubCat!=='all') assets=assets.filter(a=>(a['Sub Category']||'')=== currentSubCat);
+  if(searchQuery) {
+    const lo=searchQuery.toLowerCase();
+    assets=assets.filter(a=>(a['Asset Name']||'').toLowerCase().includes(lo)||(a['Category']||'').toLowerCase().includes(lo)||(a['Current Holder']||'').toLowerCase().includes(lo)||(a['Asset ID']||'').toLowerCase().includes(lo)||(a['Department']||'').toLowerCase().includes(lo)||(a['Brand/Model']||'').toLowerCase().includes(lo)||(a['Serial Number']||'').toLowerCase().includes(lo));
   }
-
-  // Sort
-  const sortVal = document.getElementById('sort-select')?.value || 'name';
-  if (sortVal === 'name')      assets = [...assets].sort((a,b) => (a['Asset Name']||'').localeCompare(b['Asset Name']||''));
-  if (sortVal === 'recent')    assets = [...assets].sort((a,b) => new Date(b['Last Updated']||0) - new Date(a['Last Updated']||0));
-  if (sortVal === 'condition') assets = [...assets].sort((a,b) => (condOrder[a['Condition']]??9) - (condOrder[b['Condition']]??9));
-
-  document.getElementById('asset-count').textContent = assets.length + ' asset' + (assets.length!==1?'s':'');
-
-  if (!assets.length) {
-    document.getElementById('asset-list').innerHTML = `
-      <div class="empty-state">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
-        <div style="font-size:14px;font-weight:500;color:var(--text2)">No assets found</div>
-        <div style="font-size:12px;margin-top:4px">Try a different filter or search</div>
-      </div>`;
+  document.getElementById('asset-count').textContent=assets.length+' asset'+(assets.length!==1?'s':'');
+  if(!assets.length){
+    document.getElementById('asset-list').innerHTML=`<div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg><div style="font-size:14px;font-weight:500;color:var(--text2)">No assets found</div><div style="font-size:12px;margin-top:4px">Try a different filter</div></div>`;
     return;
   }
-
-  document.getElementById('asset-list').innerHTML = assets.map(a => {
-    const col     = catColor[a['Category']] || catColor['Other'];
-    const holder  = a['Current Holder'] || 'Unassigned';
-    const free    = !a['Current Holder'] || holder === 'Unassigned';
-    const cond    = a['Condition'] || '';
-    const condBadge = cond ? cbadge(cond) : '';
-    const brand   = a['Brand/Model'] ? `<span>${a['Brand/Model']}</span>` : '';
-    const dept    = a['Department'] || '';
-    return `
-    <div class="asset-item" onclick="openAssetFromList('${a['Asset ID']}')">
-      <div class="asset-cat-bar" style="background:${col.bar}"></div>
+  document.getElementById('asset-list').innerHTML=assets.map(a=>{
+    const cfg=CATEGORIES[a['Category']]||CATEGORIES['Other'];
+    const holder=a['Current Holder']||'Unassigned';
+    const free=!a['Current Holder']||holder==='Unassigned';
+    const sub=a['Sub Category']?` › ${a['Sub Category']}`:'';
+    return `<div class="asset-item" onclick="openAssetFromList('${a['Asset ID']}')">
+      <div class="asset-cat-bar" style="background:${cfg.color}"></div>
       <div class="asset-item-inner">
-        <div class="asset-icon" style="background:${col.bg};color:${col.color}">${catEmoji[a['Category']]||'📦'}</div>
+        <div class="asset-icon" style="background:${cfg.bg};color:${cfg.color}">${cfg.emoji}</div>
         <div class="asset-info">
           <div class="asset-name">${a['Asset Name']||'—'}</div>
-          <div class="asset-meta">
-            <span style="font-family:'DM Mono',monospace;font-size:10px">${a['Asset ID']}</span>
-            ${brand ? `<span class="asset-meta-dot"></span>${brand}` : ''}
-            ${dept  ? `<span class="asset-meta-dot"></span><span>${dept}</span>` : ''}
-          </div>
+          <div class="asset-meta">${a['Asset ID']} · ${a['Category']||'—'}${sub}</div>
           <div style="margin-top:5px;display:flex;align-items:center;gap:5px">
-            ${condBadge}
-            <span class="badge ${free ? 'badge-green' : 'badge-blue'}">${free ? '✓ Available' : '👤 ' + holder}</span>
+            ${cbadge(a['Condition'])}
+            <span class="badge ${free?'badge-green':'badge-blue'}">${free?'✓ Free':'👤 '+holder}</span>
           </div>
         </div>
-        <div style="flex-shrink:0;color:var(--text3)">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
-        </div>
+        <div style="flex-shrink:0;color:var(--text3)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></div>
       </div>
     </div>`;
   }).join('');
 }
 
 // ── QR CODES ──────────────────────────────────────────
-// ── QR CODES ──────────────────────────────────────────
-let qrAssets = [];
-let qrSize = 'sm';
-let qrDetail = 'minimal';
-let qrSelected = new Set();
-const qrSizeMap = { sm: 80, md: 120, lg: 180 };
-
 async function loadQRCodes() {
-  document.getElementById('qr-grid').innerHTML = '<div class="loading" style="grid-column:1/-1"><div class="spinner"></div></div>';
+  document.getElementById('qr-grid').innerHTML='<div class="loading" style="grid-column:1/-1"><div class="spinner"></div></div>';
   try {
-    const d = await api({ action:'getAllAssets' });
-    qrAssets = d.assets || [];
-    if (!qrAssets.length) {
-      document.getElementById('qr-grid').innerHTML = '<p style="color:var(--text3);text-align:center;padding:20px;grid-column:1/-1">No assets yet. Add assets first.</p>';
-      return;
-    }
-    // Select all by default
-    qrSelected = new Set(qrAssets.map(a => a['Asset ID']));
-    document.getElementById('qr-total-count').textContent = qrAssets.length + ' assets';
-    renderQRGrid();
-  } catch(e) {
-    document.getElementById('qr-grid').innerHTML = '<p style="color:var(--red);text-align:center;padding:20px">Could not load QR codes.</p>';
-  }
-}
-
-function renderQRGrid() {
-  const grid = document.getElementById('qr-grid');
-  grid.className = 'qr-grid size-' + qrSize;
-  const px = qrSizeMap[qrSize];
-
-  grid.innerHTML = qrAssets.map(a => {
-    const id = a['Asset ID'];
-    const sel = qrSelected.has(id);
-    const detailsHtml = qrDetail === 'full' ? `
-      <div class="qr-details-block">
-        <div><b>Cat:</b> ${a['Category']||'—'}</div>
-        <div><b>Brand:</b> ${a['Brand/Model']||'—'}</div>
-        <div><b>S/N:</b> ${a['Serial Number']||'—'}</div>
-        <div><b>Holder:</b> ${a['Current Holder']||'Unassigned'}</div>
-        <div><b>Dept:</b> ${a['Department']||'—'}</div>
-      </div>` : '';
-    return `
-      <div class="qr-card ${sel?'selected':''}" id="qrcard-${id}" onclick="toggleQrSelect('${id}')">
-        <div class="qr-check">${sel?'✓':''}</div>
-        <div id="qr-${id}" style="display:inline-block"></div>
+    const d=await api({action:'getAllAssets'});
+    const assets=d.assets||[];
+    if(!assets.length){document.getElementById('qr-grid').innerHTML='<p style="color:var(--text3);text-align:center;padding:20px;grid-column:1/-1">No assets yet.</p>';return;}
+    document.getElementById('qr-grid').innerHTML=assets.map(a=>`
+      <div class="qr-card">
+        <div id="qr-${a['Asset ID']}"></div>
         <div class="qr-label">${a['Asset Name']||'—'}</div>
-        <div class="qr-id">${id}</div>
-        ${detailsHtml}
-      </div>`;
-  }).join('');
-
-  // Generate QR codes
-  setTimeout(() => {
-    qrAssets.forEach(a => {
-      const el = document.getElementById('qr-' + a['Asset ID']);
-      if (el && !el.querySelector('canvas') && !el.querySelector('img')) {
-        try {
-          new QRCode(el, {
-            text: a['Asset ID'],
-            width: px, height: px,
-            colorDark: '#1C1B18', colorLight: '#ffffff',
-            correctLevel: QRCode.CorrectLevel.M
-          });
-        } catch(e) {}
-      }
-    });
-  }, 80);
-
-  updateQrPrintBar();
-}
-
-function toggleQrSelect(id) {
-  if (qrSelected.has(id)) {
-    qrSelected.delete(id);
-  } else {
-    qrSelected.add(id);
-  }
-  const card = document.getElementById('qrcard-' + id);
-  if (card) {
-    card.classList.toggle('selected', qrSelected.has(id));
-    const chk = card.querySelector('.qr-check');
-    if (chk) chk.textContent = qrSelected.has(id) ? '✓' : '';
-  }
-  updateQrPrintBar();
-}
-
-function qrSelectAll() {
-  qrSelected = new Set(qrAssets.map(a => a['Asset ID']));
-  document.querySelectorAll('.qr-card').forEach(c => {
-    c.classList.add('selected');
-    const chk = c.querySelector('.qr-check');
-    if (chk) chk.textContent = '✓';
-  });
-  updateQrPrintBar();
-}
-
-function qrSelectNone() {
-  qrSelected.clear();
-  document.querySelectorAll('.qr-card').forEach(c => {
-    c.classList.remove('selected');
-    const chk = c.querySelector('.qr-check');
-    if (chk) chk.textContent = '';
-  });
-  updateQrPrintBar();
-}
-
-function updateQrPrintBar() {
-  const bar = document.getElementById('qr-print-bar');
-  const lbl = document.getElementById('qr-print-label');
-  const sel = document.getElementById('qr-sel-count');
-  const n = qrSelected.size;
-  sel.textContent = n + ' selected';
-  if (n > 0) {
-    bar.classList.add('show');
-    lbl.textContent = n === qrAssets.length ? 'Print all ' + n + ' QR codes' : 'Print ' + n + ' selected';
-  } else {
-    bar.classList.remove('show');
-  }
-}
-
-function setQrSize(sz) {
-  qrSize = sz;
-  ['sm','md','lg'].forEach(s => document.getElementById('qrsz-'+s).classList.toggle('active', s===sz));
-  // Re-render fully so QR codes resize
-  const grid = document.getElementById('qr-grid');
-  grid.innerHTML = '';
-  renderQRGrid();
-}
-
-function setQrDetail(dt) {
-  qrDetail = dt;
-  ['minimal','full'].forEach(d => document.getElementById('qrdt-'+d).classList.toggle('active', d===dt));
-  renderQRGrid();
-}
-
-function printSelectedQR() {
-  if (!qrSelected.size) return showToast('Select at least one QR code');
-  // Mark unselected cards as print-hidden
-  qrAssets.forEach(a => {
-    const card = document.getElementById('qrcard-' + a['Asset ID']);
-    if (card) card.classList.toggle('print-hidden', !qrSelected.has(a['Asset ID']));
-  });
-  window.print();
-  // Restore after print
-  setTimeout(() => {
-    document.querySelectorAll('.qr-card.print-hidden').forEach(c => c.classList.remove('print-hidden'));
-  }, 1000);
+        <div class="qr-id">${a['Asset ID']}</div>
+      </div>`).join('');
+    setTimeout(()=>{
+      assets.forEach(a=>{
+        try{ new QRCode(document.getElementById('qr-'+a['Asset ID']),{text:a['Asset ID'],width:100,height:100,colorDark:'#1C1B18',colorLight:'#fff',correctLevel:QRCode.CorrectLevel.M}); }catch(e){}
+      });
+    },80);
+  } catch(e){ document.getElementById('qr-grid').innerHTML='<p style="color:var(--red);text-align:center;padding:20px">Could not load QR codes.</p>'; }
 }
 
 // ── DELETE ASSET ──────────────────────────────────────
-function confirmDelete(assetId, assetName) {
-  if (!currentUser || currentUser.role!=='Admin') return showToast('Admin only');
-  if (confirm(`Delete "${assetName}"?\n\nThis cannot be undone. Action will be logged.`)) deleteAsset(assetId, assetName);
+function confirmDelete(assetId,assetName) {
+  if(!currentUser||currentUser.role!=='Admin') return showToast('Admin only');
+  if(confirm(`Delete "${assetName}"?\n\nThis cannot be undone. Action will be logged.`)) deleteAsset(assetId,assetName);
 }
-async function deleteAsset(assetId, assetName) {
+async function deleteAsset(assetId,assetName) {
   try {
-    const d = await api({ action:'deleteAsset', assetId, assetName, deletedBy:currentUser.fullName });
-    if (d.success) { showToast('✓ Asset deleted'); currentAsset = null; switchNav('list'); }
-    else showToast('Error: ' + (d.error||'Could not delete'));
-  } catch(e) { showToast('Error. Check connection.'); }
+    const d=await api({action:'deleteAsset',assetId,assetName,deletedBy:currentUser.fullName});
+    if(d.success){showToast('✓ Asset deleted');currentAsset=null;switchNav('list');}
+    else showToast('Error: '+(d.error||'Could not delete'));
+  } catch(e){showToast('Error. Check connection.');}
 }
 
 // ── ADMIN: USERS ──────────────────────────────────────
 async function loadUsers() {
-  document.getElementById('users-list').innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+  document.getElementById('users-list').innerHTML='<div class="loading"><div class="spinner"></div></div>';
   try {
-    const d = await api({ action:'getUsers' });
-    const users = d.users || [];
-    document.getElementById('users-list').innerHTML = users.length ? users.map(u=>`
+    const d=await api({action:'getUsers'});
+    document.getElementById('users-list').innerHTML=(d.users||[]).length?(d.users||[]).map(u=>`
       <div class="user-item">
         <div class="user-av">${u.fullName.charAt(0).toUpperCase()}</div>
         <div style="flex:1;min-width:0">
@@ -1459,51 +1239,44 @@ async function loadUsers() {
           <button class="btn btn-sm ${u.active==='YES'?'btn-secondary':'btn-green'}" style="font-size:11px;padding:4px 10px" onclick="toggleUser('${u.username}','${u.fullName}')">${u.active==='YES'?'Deactivate':'Activate'}</button>
         </div>
       </div>`).join('')
-      : '<div class="empty-state">No users found</div>';
-  } catch(e) { document.getElementById('users-list').innerHTML = '<p style="color:var(--red)">Could not load users.</p>'; }
+      :'<div class="empty-state">No users found</div>';
+  } catch(e){document.getElementById('users-list').innerHTML='<p style="color:var(--red)">Could not load users.</p>';}
 }
 function showAddUserOverlay() {
-  ['au-name','au-user','au-pass'].forEach(id => document.getElementById(id).value = '');
-  document.getElementById('au-role').value = 'Staff';
-  document.getElementById('au-err').classList.remove('show');
-  document.getElementById('au-ok').classList.remove('show');
+  ['au-name','au-user','au-pass'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('au-role').value='Staff';
+  ['au-err','au-ok'].forEach(id=>document.getElementById(id).classList.remove('show'));
   showOverlay('adduser-overlay');
 }
 async function doAddUser() {
-  const name = document.getElementById('au-name').value.trim();
-  const user = document.getElementById('au-user').value.trim();
-  const pass = document.getElementById('au-pass').value;
-  const role = document.getElementById('au-role').value;
-  const err = document.getElementById('au-err');
-  const ok = document.getElementById('au-ok');
-  const btn = document.getElementById('au-btn');
-  if (!name||!user||!pass) { showErr(err,'Please fill all fields'); return; }
-  btn.innerHTML = '<span class="spinner-sm"></span> Adding...'; btn.disabled = true;
+  const name=document.getElementById('au-name').value.trim();
+  const user=document.getElementById('au-user').value.trim();
+  const pass=document.getElementById('au-pass').value;
+  const role=document.getElementById('au-role').value;
+  const err=document.getElementById('au-err'),ok=document.getElementById('au-ok'),btn=document.getElementById('au-btn');
+  if(!name||!user||!pass){showErr(err,'Please fill all fields');return;}
+  btn.innerHTML='<span class="spinner-sm"></span> Adding...'; btn.disabled=true;
   try {
-    await api({ action:'addUser', fullName:name, username:user, password:pass, role, addedBy:currentUser.fullName });
-    ok.textContent = '✓ User added successfully!'; ok.classList.add('show');
-    err.classList.remove('show'); loadUsers();
-    setTimeout(() => hideOverlay('adduser-overlay'), 1500);
-  } catch(e) { showErr(err,'Error adding user. Check connection.'); }
-  btn.textContent = 'Add User'; btn.disabled = false;
+    await api({action:'addUser',fullName:name,username:user,password:pass,role,addedBy:currentUser.fullName});
+    ok.textContent='✓ User added!'; ok.classList.add('show'); err.classList.remove('show');
+    loadUsers(); setTimeout(()=>hideOverlay('adduser-overlay'),1500);
+  } catch(e){showErr(err,'Error. Check connection.');}
+  btn.textContent='Add User'; btn.disabled=false;
 }
-async function toggleUser(username, fullName) {
-  if (username===currentUser.username) return showToast("Can't deactivate yourself");
-  if (!confirm('Toggle active status for '+fullName+'?')) return;
-  try {
-    await api({ action:'toggleUser', username, doneBy:currentUser.fullName });
-    showToast('✓ User status updated'); loadUsers();
-  } catch(e) { showToast('Error. Check connection.'); }
+async function toggleUser(username,fullName) {
+  if(username===currentUser.username) return showToast("Can't deactivate yourself");
+  if(!confirm('Toggle active status for '+fullName+'?')) return;
+  try{ await api({action:'toggleUser',username,doneBy:currentUser.fullName}); showToast('✓ Updated'); loadUsers(); }
+  catch(e){showToast('Error.');}
 }
 
 // ── ADMIN: LOGS ───────────────────────────────────────
-const logIcon = {'ADD_ASSET':'📦','DELETE_ASSET':'🗑️','ALLOCATED':'✅','RETURNED':'↩️','ADD_USER':'👤','TOGGLE_USER':'🔄','EMAIL_ERROR':'📧'};
+const logIcon={'ADD_ASSET':'📦','DELETE_ASSET':'🗑️','ALLOCATED':'✅','RETURNED':'↩️','ADD_USER':'👤','TOGGLE_USER':'🔄','EMAIL_ERROR':'📧','PASSWORD_REQUEST':'🔑'};
 async function loadLogs() {
-  document.getElementById('logs-list').innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+  document.getElementById('logs-list').innerHTML='<div class="loading"><div class="spinner"></div></div>';
   try {
-    const d = await api({ action:'getLogs' });
-    const logs = d.logs || [];
-    document.getElementById('logs-list').innerHTML = logs.length ? logs.map(l=>`
+    const d=await api({action:'getLogs'});
+    document.getElementById('logs-list').innerHTML=(d.logs||[]).length?(d.logs||[]).map(l=>`
       <div class="log-item">
         <div class="log-icon">${logIcon[l['Action']]||'📋'}</div>
         <div class="log-body">
@@ -1512,26 +1285,21 @@ async function loadLogs() {
           <div class="log-time">${l['Timestamp']?new Date(l['Timestamp']).toLocaleString('en-IN',{day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}):'—'}</div>
         </div>
       </div>`).join('')
-      : '<div style="text-align:center;padding:20px;color:var(--text3);font-size:13px">No logs yet</div>';
-  } catch(e) { document.getElementById('logs-list').innerHTML = '<p style="color:var(--red)">Could not load logs.</p>'; }
+      :'<div style="text-align:center;padding:20px;color:var(--text3);font-size:13px">No logs yet</div>';
+  } catch(e){document.getElementById('logs-list').innerHTML='<p style="color:var(--red)">Could not load logs.</p>';}
 }
 function switchAdminTab(tab) {
-  document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.filter-tab').forEach(t=>t.classList.remove('active'));
   document.getElementById('atab-'+tab).classList.add('active');
-  document.getElementById('admin-users').style.display = tab==='users'?'block':'none';
-  document.getElementById('admin-logs').style.display = tab==='logs'?'block':'none';
-  if (tab==='logs') loadLogs();
-  if (tab==='users') loadUsers();
+  document.getElementById('admin-users').style.display=tab==='users'?'block':'none';
+  document.getElementById('admin-logs').style.display=tab==='logs'?'block':'none';
+  if(tab==='logs') loadLogs(); if(tab==='users') loadUsers();
 }
 
 // ── UTILS ─────────────────────────────────────────────
-function today() { return new Date().toISOString().split('T')[0]; }
-function showToast(msg, dur=2800) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), dur);
-}
-function showErr(el, msg) { el.textContent = msg; el.classList.add('show'); }
+function today(){return new Date().toISOString().split('T')[0];}
+function showToast(msg,dur=2800){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),dur);}
+function showErr(el,msg){el.textContent=msg;el.classList.add('show');}
 </script>
 </body>
 </html>
