@@ -655,7 +655,15 @@ function goBack() {
 }
 
 // ── API ───────────────────────────────────────────────
-async function api(params) {
+async function api(params, usePost = false) {
+  if (usePost) {
+    const res = await fetch(API, {
+      method: 'POST',
+      body: new URLSearchParams(params).toString(),
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    });
+    return res.json();
+  }
   const url = API + '?' + new URLSearchParams(params).toString();
   const res = await fetch(url);
   return res.json();
@@ -883,7 +891,7 @@ async function uploadPhotos(context, assetId) {
       const base64 = p.dataUrl.split(',')[1];
       const mimeType = p.file.type || 'image/jpeg';
       const filename = assetId + '_' + context + '_' + Date.now() + '_' + i + '.jpg';
-      const d = await api({ action:'uploadPhoto', data:base64, mimeType, filename, assetId });
+      const d = await api({ action:'uploadPhoto', data:base64, mimeType, filename, assetId }, true);
       if (d.success && d.url) urls.push(d.url);
     } catch(e) { console.error('Upload error', e); }
   }
